@@ -8,13 +8,13 @@ using BlogApp.Models.enums;
 namespace BlogApp.Models {
     public class Users {
         public int ID { get; set; } //EF handle as primary key (ID or classnameID)
-        public string username { get; set; }
-        public string email { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
 
-        public UserRole role;
+        public UserRole Role;
 
-        public ICollection<Comments> comments { get; set; }//one user has many comments(1 to m)
-        public ICollection<Posts> posts { get; set;} //one user has many posts(1 to m)
+        public ICollection<Comments> Comments { get; set; }//one user has many comments(1 to m)
+        public ICollection<Posts> Posts { get; set;} //one user has many posts(1 to m)
 
     }// end User class  .
 }
