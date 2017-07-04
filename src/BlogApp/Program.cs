@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using BlogApp.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp
 {

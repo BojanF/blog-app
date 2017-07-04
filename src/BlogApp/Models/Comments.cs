@@ -8,17 +8,14 @@ using System.Threading.Tasks;
 namespace BlogApp.Models {
     public class Comments {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; } //EF handle as primary key (ID or classnameID)
         public int CommentText { get; set; }
         public DateTime CommentedAt { get; set; }
 
-        public int UserIdFK { get; set; } // Foregin key
-        public int PostIdFK { get; set; } // Foregin key
-
-        [ForeignKey("UserIdFK")]
-        public virtual Users Users { get; set; } // Comments entity can hold one User
-        [ForeignKey("PostIdFK")]
-        public virtual Posts Posts { get; set; } // Comments entity can hold one Post
+        public  Users Users { get; set; } // Comments entity can hold one User(EF handle fk itslef)
+       // [ForeignKey("PostId")]
+        public  Posts Posts { get; set; } // Comments entity can hold one Post(EF handle fk itslef)
 
     }// end Comments class
 }

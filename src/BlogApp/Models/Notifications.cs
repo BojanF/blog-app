@@ -5,17 +5,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlogApp.Models {
-    public class Notifications {
+namespace BlogApp.Models
+{
+    public class Notifications
+    {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public string Text { get; set; }
         public DateTime Time { get; set; }
         public bool Recived { get; set; }
 
-        public int UserIdFK;
+        //public int UserId;
 
-        [ForeignKey("UserIdFK")]
-        public virtual Users Users { get; set; }
+        //[ForeignKey("UserId")]
+        public Users Users { get; set; }//(EF handle fk itslef)
     }//end Notification class
 }
