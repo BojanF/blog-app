@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using BlogApp.Models;
+using BlogApp.Models.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp
@@ -31,12 +31,8 @@ namespace BlogApp
         {
             // Add framework services.
             services.AddMvc();
-           
-            //Data Source=(localdb)\mssqllocaldb;Initial Catalog=BlogApp; Integrated Security=True
-            //var connection = @"Server=Data Source=(localdb)\ProjectsV13;Initial Catalog=BlogApp;Integrated Security=True;Connect Timeout=30;";
-            //services.AddDbContext<BlogAppContext>(options => options.UseSqlServer("Data Source=(localdb)/ProjectsV13;Initial Catalog=BlogApp;Integrated Security=True;Connect Timeout=30;"));
-    }
-      
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
