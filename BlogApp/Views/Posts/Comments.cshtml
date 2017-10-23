@@ -1,0 +1,52 @@
+@model BlogApp.Special.PaginatedList<BlogApp.Models.Comment>
+    @{
+        ViewData["Title"] = "Comments";
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3>Comments for post: <a asp-controller="Posts" asp-action="Details" asp-route-id="@ViewData["PostID"]"> @ViewData["PostHeadline"] </a> </h3>
+                @if (@Model.Count() > 0)
+                {
+                    @foreach (var CommentsList in Model)
+                    {
+                        <h3>@CommentsList.Users.Username <small>on @CommentsList.CommentedAt</small></h3>
+                        <p>
+                            @CommentsList.CommentText
+                        </p>
+                        <hr>
+                    }
+                    <!-- Pager -->
+
+                    <ul class="pager">
+                        <li class="previous">
+                            <a asp-action="Comments"
+                               asp-route-page="@(Model.PageIndex - 1)"
+                               class="btn btn-default @prevDisabled">
+                                &larr; Previous
+                            </a>
+                        </li>
+                        <li class="next">
+                            <a asp-action="Comments"
+                               asp-route-page="@(Model.PageIndex + 1)"
+                               class="btn btn-default @nextDisabled">
+                                Next &rarr;
+                            </a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <div> No comments for this post ! </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,57 @@
+@model BlogApp.Models.Category
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- Main Content -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <h3>Enter new category</h3>
+            <br />
+            <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
+            <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
+            <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <label asp-for="CategoryName" class="control-label"></label>
+                        <input asp-for="CategoryName" type="text" class="form-control" placeholder="Category name">
+                        <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    </div>
+                </div>
+                    
+                <div class="row">
+                    <div class="control-group">
+                        <div class="form-group col-xs-12 col-md-6 floating-label-form-group controls">
+                            <label asp-for="PostRule" class="control-label"></label>
+                            <input asp-for="PostRule" type="number" min="1" class="form-control" placeholder="Posts rule">
+                            <span asp-validation-for="PostRule" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group col-xs-12 col-md-6 floating-label-form-group controls">
+                          <label asp-for="LikesRule" class="control-label"></label>
+                          <input asp-for="LikesRule" type="number" min="1" class="form-control" placeholder="Likes rule">
+                          <span asp-validation-for="LikesRule" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <button type="submit" value="Create" class="btn btn-default">Save</button>
+                    </div>
+                </div>                
+            </form>            
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

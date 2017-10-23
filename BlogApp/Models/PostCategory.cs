@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BlogApp.Models {
     public class PostCategory {
-        public long PostsId { get; set; }
+        public long PostId { get; set; }
 
-        [ForeignKey("PostsId")]
-        public Posts Posts { get; set; }
+        [ForeignKey("PostId")]
+        public Post Post { get; set; }
 
-        public long CategoriesId { get; set; }
+        public long CategoryId { get; set; }
 
-        [ForeignKey("CategoriesId")]
-        public Categories Categories { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
     }
 }

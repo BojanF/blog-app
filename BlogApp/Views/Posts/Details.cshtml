@@ -1,0 +1,20 @@
+@model BlogApp.Models.Post
+<!--model IEnumerable<BlogApp.Models.Post>-->
+<!--model IEnumerable<BlogApp.Models.Post>-->
+@{
+    ViewData["Title"] = "Details";
+}
+@foreach (var cat in Model.PostsCategories)
+{
+    <a href="#"> | @cat.Category.CategoryName |</a>
+
+}
+<hr />
+<blockquote>@Html.DisplayFor(model => model.Caption)</blockquote>
+<p>@Html.DisplayFor(model => model.PostedText)</p>
+
+
+<div>   
+    <a class="btn btn-default" asp-controller="Posts" asp-action="Comments" asp-route-id="@Model.ID">Load comments</a>
+</div>
+

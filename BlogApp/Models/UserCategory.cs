@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BlogApp.Model {
     public class UserCategory {/*Many to many relationship references*/
-        public long UsersId { get; set; }
+        public long UserId { get; set; }        
 
-        [ForeignKey("UsersId")]
-        public Users Users { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
 
-        public long CategoriesId { get; set; }
+        public long CategoryId { get; set; }
 
-        [ForeignKey("CategoriesId")]
-        public Categories Categories { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
 
     }
 }

@@ -1,0 +1,40 @@
+@model BlogApp.Models.Category
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="ID" />
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LikesRule)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LikesRule)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PostRule)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PostRule)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </div>
+    </form>
+</div>

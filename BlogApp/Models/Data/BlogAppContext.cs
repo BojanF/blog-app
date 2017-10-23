@@ -10,57 +10,59 @@ namespace BlogApp.Models.Data
     public class BlogAppContext : DbContext {
 
         public BlogAppContext(DbContextOptions<BlogAppContext> options) : base(options)
-        { }
+        {
+            
+        }
 
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Posts> Posts { get; set; }
-        public DbSet<Comments> Comments { get; set; }
-        public DbSet<Notifications> Notifications { get; set; }
-        public DbSet<Categories> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Users>().ToTable("user");
+            modelBuilder.Entity<User>().ToTable("Users");
 
-            modelBuilder.Entity<Posts>().ToTable("post");
+            modelBuilder.Entity<Post>().ToTable("Posts");
            
-            modelBuilder.Entity<Comments>().ToTable("comment");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
 
-            modelBuilder.Entity<Notifications>().ToTable("notification");
+            modelBuilder.Entity<Notification>().ToTable("Notifications");
 
-            modelBuilder.Entity<Categories>().ToTable("category");
+            modelBuilder.Entity<Category>().ToTable("Categories");
 
 
 //------Fluend API --------------------------------------------------------------------/
     //many to many (user and category) relationship
             modelBuilder.Entity<UserCategory>()
-            .HasKey(uc => new { uc.UsersId, uc.CategoriesId });
+            .HasKey(uc => new { uc.UserId, uc.CategoryId });
 
             modelBuilder.Entity<UserCategory>()
-                .HasOne(uc => uc.Users)
+                .HasOne(uc => uc.User)
                 .WithMany(u => u.UsersCategories)
-                .HasForeignKey(uc => uc.UsersId);
+                .HasForeignKey(uc => uc.UserId);
 
             modelBuilder.Entity<UserCategory>()
-                .HasOne(uc => uc.Categories)
+                .HasOne(uc => uc.Category)
                 .WithMany(c => c.UsersCategories)
-                .HasForeignKey(uc => uc.CategoriesId);
+                .HasForeignKey(uc => uc.CategoryId);
 
    //many to many (post and category) relationship
             modelBuilder.Entity<PostCategory>()
-           .HasKey(pc => new { pc.PostsId, pc.CategoriesId });
+           .HasKey(pc => new { pc.PostId, pc.CategoryId });
 
             modelBuilder.Entity<PostCategory>()
-                .HasOne(pc => pc.Posts)
+                .HasOne(pc => pc.Post)
                 .WithMany(p => p.PostsCategories)
-                .HasForeignKey(pc => pc.PostsId);
+                .HasForeignKey(pc => pc.PostId);
 
             modelBuilder.Entity<PostCategory>()
-                .HasOne(pc => pc.Categories)
+                .HasOne(pc => pc.Category)
                 .WithMany(c => c.PostsCategories)
-                .HasForeignKey(pc => pc.CategoriesId);
+                .HasForeignKey(pc => pc.CategoryId);
 //------/Fluend API --------------------------------------------------------------------/
         }
 

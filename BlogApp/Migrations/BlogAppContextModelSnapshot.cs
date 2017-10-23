@@ -17,18 +17,18 @@ namespace BlogApp.Migrations
 
             modelBuilder.Entity("BlogApp.Model.UserCategory", b =>
                 {
-                    b.Property<long>("UsersId");
+                    b.Property<long>("UserId");
 
-                    b.Property<long>("CategoriesId");
+                    b.Property<long>("CategoryId");
 
-                    b.HasKey("UsersId", "CategoriesId");
+                    b.HasKey("UserId", "CategoryId");
 
-                    b.HasIndex("CategoriesId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("UserCategory");
                 });
 
-            modelBuilder.Entity("BlogApp.Models.Categories", b =>
+            modelBuilder.Entity("BlogApp.Models.Category", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
@@ -42,10 +42,10 @@ namespace BlogApp.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("category");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BlogApp.Models.Comments", b =>
+            modelBuilder.Entity("BlogApp.Models.Comment", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
@@ -55,20 +55,20 @@ namespace BlogApp.Migrations
 
                     b.Property<DateTime>("CommentedAt");
 
-                    b.Property<long>("PostsID");
+                    b.Property<long>("PostID");
 
                     b.Property<long>("UsersID");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PostsID");
+                    b.HasIndex("PostID");
 
                     b.HasIndex("UsersID");
 
-                    b.ToTable("comment");
+                    b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("BlogApp.Models.Notifications", b =>
+            modelBuilder.Entity("BlogApp.Models.Notification", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
@@ -80,36 +80,29 @@ namespace BlogApp.Migrations
 
                     b.Property<DateTime>("Time");
 
-                    b.Property<long>("UsersID");
+                    b.Property<long>("UserID");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UsersID");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("notification");
+                    b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("BlogApp.Models.PostCategory", b =>
-                {
-                    b.Property<long>("PostsId");
-
-                    b.Property<long>("CategoriesId");
-
-                    b.HasKey("PostsId", "CategoriesId");
-
-                    b.HasIndex("CategoriesId");
-
-                    b.ToTable("PostCategory");
-                });
-
-            modelBuilder.Entity("BlogApp.Models.Posts", b =>
+            modelBuilder.Entity("BlogApp.Models.Post", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Approved");
 
-                    b.Property<int>("Dislikes");
+                    b.Property<string>("Caption")
+                        .IsRequired();
+
+                    b.Property<bool>("Edited");
+
+                    b.Property<string>("Headline")
+                        .IsRequired();
 
                     b.Property<int>("Likes");
 
@@ -118,16 +111,29 @@ namespace BlogApp.Migrations
                     b.Property<string>("PostedText")
                         .IsRequired();
 
-                    b.Property<long>("UsersID");
+                    b.Property<long>("UserID");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UsersID");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("post");
+                    b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("BlogApp.Models.Users", b =>
+            modelBuilder.Entity("BlogApp.Models.PostCategory", b =>
+                {
+                    b.Property<long>("PostId");
+
+                    b.Property<long>("CategoryId");
+
+                    b.HasKey("PostId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("PostCategory");
+                });
+
+            modelBuilder.Entity("BlogApp.Models.User", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
@@ -147,61 +153,61 @@ namespace BlogApp.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("user");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BlogApp.Model.UserCategory", b =>
                 {
-                    b.HasOne("BlogApp.Models.Categories", "Categories")
+                    b.HasOne("BlogApp.Models.Category", "Category")
                         .WithMany("UsersCategories")
-                        .HasForeignKey("CategoriesId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlogApp.Models.Users", "Users")
+                    b.HasOne("BlogApp.Models.User", "User")
                         .WithMany("UsersCategories")
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BlogApp.Models.Comments", b =>
+            modelBuilder.Entity("BlogApp.Models.Comment", b =>
                 {
-                    b.HasOne("BlogApp.Models.Posts", "Posts")
-                        .WithMany("comments")
-                        .HasForeignKey("PostsID")
+                    b.HasOne("BlogApp.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlogApp.Models.Users", "Users")
+                    b.HasOne("BlogApp.Models.User", "Users")
                         .WithMany("Comments")
                         .HasForeignKey("UsersID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BlogApp.Models.Notifications", b =>
+            modelBuilder.Entity("BlogApp.Models.Notification", b =>
                 {
-                    b.HasOne("BlogApp.Models.Users", "Users")
+                    b.HasOne("BlogApp.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UsersID")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BlogApp.Models.Post", b =>
+                {
+                    b.HasOne("BlogApp.Models.User", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlogApp.Models.PostCategory", b =>
                 {
-                    b.HasOne("BlogApp.Models.Categories", "Categories")
+                    b.HasOne("BlogApp.Models.Category", "Category")
                         .WithMany("PostsCategories")
-                        .HasForeignKey("CategoriesId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlogApp.Models.Posts", "Posts")
+                    b.HasOne("BlogApp.Models.Post", "Post")
                         .WithMany("PostsCategories")
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BlogApp.Models.Posts", b =>
-                {
-                    b.HasOne("BlogApp.Models.Users", "Users")
-                        .WithMany("Posts")
-                        .HasForeignKey("UsersID")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

@@ -1,0 +1,105 @@
+@model BlogApp.Models.Post
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <h2>Create new post</h2>
+
+            <form asp-action="Create">
+                <div class="">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <!--<div class="form-group">
+                        <label asp-for="Headline" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="Headline" class="form-control" />
+                            <span asp-validation-for="Headline" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Caption" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="Caption" class="form-control" />
+                            <span asp-validation-for="Caption" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostedText" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="PostedText" class="form-control" />
+                            <span asp-validation-for="PostedText" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Likes" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="Likes" class="form-control" />
+                            <span asp-validation-for="Likes" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <input asp-for="Approved" />
+                                <label asp-for="Approved"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostedAt" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <input asp-for="PostedAt" class="form-control" />
+                            <span asp-validation-for="PostedAt" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <input asp-for="Edited" />
+                                <label asp-for="Edited"></label>
+                            </div>
+                        </div>
+                    </div>-->
+                    
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label asp-for="Headline" class="control-label"></label>
+                            <input asp-for="Headline" placeholder="Headline" class="form-control" />
+                            <span asp-validation-for="Headline" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">                            
+                            <label asp-for="Caption" class="control-label"></label>
+                            <input asp-for="Caption" placeholder="Caption" class="form-control" />
+                            <span asp-validation-for="Caption" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">                            
+                            <label asp-for="PostedText" class="control-label"></label>
+                            
+                            <textarea rows="5" class="form-control" asp-for="PostedText" placeholder="Post"></textarea>
+
+                            <span asp-validation-for="PostedText" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
