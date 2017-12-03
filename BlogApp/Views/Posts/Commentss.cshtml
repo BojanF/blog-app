@@ -1,0 +1,63 @@
+@model BlogApp.Models.Post
+@{ 
+    int counter = 0;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            
+            @if (Convert.ToInt16(ViewData["Count"]) > 0)
+            {
+                
+                @foreach (var CommentsList in Model.Comments)
+                {
+                    @if (counter < 2)
+                    {
+                        <div class="FewComments">
+                            <h3>@CommentsList.Users.UserName <small>on @CommentsList.CommentedAt</small></h3>
+                            <p>
+                                @CommentsList.CommentText
+                            </p>
+                            <hr>
+                        </div>
+                        counter= counter + 1;
+                    }
+                    else
+                    {
+                        counter = counter + 1;
+                        <div class="AllComments">
+                            <h3>@CommentsList.Users.UserName <small>on @CommentsList.CommentedAt</small></h3>
+                            <p>
+                                @CommentsList.CommentText
+                            </p>
+                            <hr>
+                        </div>
+                    }
+
+                }
+                @if (counter > 2) {
+                    <div class="row">
+                        <div class="col-xs-offset-4 col-md-offset-5 col-lg-offset-5">
+                            <button class="btn btn-default btn-sm" id="loadComments">Load more</button>
+                        </div>
+                    </div>
+                }
+
+            }
+            else
+            {
+                <div> No comments for this post ! </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".AllComments").hide();
+        $("#loadComments").click(function () {
+            $(".AllComments").slideDown("slow");
+        });
+    });
+</script>

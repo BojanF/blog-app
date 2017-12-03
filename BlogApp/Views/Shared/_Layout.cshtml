@@ -16,7 +16,7 @@
     <link href="~/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
@@ -42,46 +42,66 @@
     </nav>-->
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a asp-area="" asp-controller="Posts" asp-action="Create">New post</a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Categories <span class="caret"></span></a>
-                        <ul class="dropdown-menu nav-dropdown">
-                            <li>
-                                <a asp-area="" asp-controller="Categories" asp-action="Index">All categories</a>
+    <form asp-area="" asp-controller="Account" asp-action="LogOut" asp-antiforgery="true" method="post" id="logoutForm" class="navbar-right">
+        <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Start Bootstrap</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+             
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                     {
+                        <li>
+                            <a asp-area="" asp-controller="Posts" asp-action="Create">New post</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Categories <span class="caret"></span></a>
+                            <ul class="dropdown-menu nav-dropdown">
+                                <li>
+                                    <a asp-area="" asp-controller="Categories" asp-action="Index">All categories</a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Categories" asp-action="Create">Add new</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                       
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> User <span class="caret"></span></a>
+                                <ul class="dropdown-menu nav-dropdown">
+                                    <li>
+                                        <button type="submit" class="btn btn-link navbar-btn navbar-link">Sign out</button>
+                                    </li>
+                                </ul>
                             </li>
+
+                        }
+                        else
+                        {
                             <li>
-                                <a asp-area="" asp-controller="Categories" asp-action="Create">Add new</a>
+                                <a asp-area="" asp-controller="Account" asp-action="Login">User</a>
                             </li>
-                        </ul>
-                    </li>                    
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>                    
-                    <li>
-                        <a href="#">User</a>
-                    </li>
-                </ul>
+                        }
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-   
+            <!-- /.container -->
+        </nav>
+    </form>
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     <header class="intro-header" style="background-image: url('../../images/home-bg.jpg')" >

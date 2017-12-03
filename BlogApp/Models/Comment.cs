@@ -15,7 +15,7 @@ namespace BlogApp.Models {
         public DateTime CommentedAt { get; set; }
 
         [Required]
-        public User Users { get; set; } // Comments entity can hold one User(EF handle fk itslef)
+        public ApplicationUser Users { get; set; } // Comments entity can hold one User(EF handle fk itslef)
         // [ForeignKey("PostId")]
         [Required]
         public Post Post { get; set; } // Comments entity can hold one Post(EF handle fk itslef)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogApp.Models.enums;
@@ -11,7 +12,7 @@ using Newtonsoft.Json.Converters;
 
 namespace BlogApp.Models {
    
-    public class User {
+    public class User {// IdentityUser is a base class from Identity Framework and it have all properties implemented
         public User() {
             Posts = new List<Post>();
             Notifications = new List<Notification>();
@@ -26,7 +27,7 @@ namespace BlogApp.Models {
         public String Email { get; set; }
         [Required]
         public String Password { get; set; }
-
+        
         [Column("role")]
         [Required]
         public String RoleType {

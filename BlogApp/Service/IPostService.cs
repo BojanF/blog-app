@@ -23,5 +23,8 @@ namespace BlogApp.Service
         Task<int> Update(Post post);
 
         IQueryable<Comment> CommentsForPost(long? id);
+
+        Task<Comment> InsertComment(Comment comment);
+
     }
 }

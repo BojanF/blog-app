@@ -23,6 +23,9 @@ namespace BlogApp.Persistence
 
         Task<int> Update(Post post);
 
+        Task<Comment> InsertComment(Comment comment);
+
         IQueryable<Comment> CommentsForPost(long? id);
+
     }
 }

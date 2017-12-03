@@ -20,7 +20,6 @@ namespace BlogApp.Models {
 
 
         public ICollection<UserCategory> UsersCategories { get; set; }
-        public ICollection<PostCategory> PostsCategories { get; set; }
-
+        public ICollection<Post> Posts { get; set; }
     }//end Categories class
 }

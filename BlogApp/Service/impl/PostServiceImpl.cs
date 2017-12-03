@@ -53,5 +53,9 @@ namespace BlogApp.Service
         {
             return _repository.CommentsForPost(id);
         }
+
+        public Task<Comment> InsertComment(Comment comment) {
+            return _repository.InsertComment(comment);
+        }
     }
 }

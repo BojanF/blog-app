@@ -15,17 +15,16 @@
                             @PostsList.Headline
                         </h2>
                     </a>  
-                        @foreach(var cat in @PostsList.PostsCategories){
-                            <a href="#"> | @cat.Category.CategoryName |</a>
-                            
-                        }
+                        
+                        <a href="#"> | @PostsList.Category.CategoryName |</a>
+
                         <blockquote>
                             @PostsList.Caption
                         </blockquote>
 
 
                     
-                    <p class="post-meta">Posted by <a href="#">@PostsList.User.Username</a> on @PostsList.PostedAt.ToString()</p>
+                    <p class="post-meta">Posted by <a href="#">@PostsList.UserName</a> on @PostsList.PostedAt.ToString()</p>
 
                 </div>
                 <hr>

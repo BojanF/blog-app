@@ -1,5 +1,6 @@
 ﻿using BlogApp.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace BlogApp.Models.Data
 {
-    public class BlogAppContext : DbContext {
+    public class BlogAppContext : IdentityDbContext<ApplicationUser> {
 
         public BlogAppContext(DbContextOptions<BlogAppContext> options) : base(options)
         {
             
         }
 
-        public DbSet<User> Users { get; set; }
+        public new DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
@@ -24,7 +25,7 @@ namespace BlogApp.Models.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().ToTable("Users");
+            //modelBuilder.Entity<User>().ToTable("Users");
 
             modelBuilder.Entity<Post>().ToTable("Posts");
            
@@ -35,7 +36,7 @@ namespace BlogApp.Models.Data
             modelBuilder.Entity<Category>().ToTable("Categories");
 
 
-//------Fluend API --------------------------------------------------------------------/
+//------Fluent API --------------------------------------------------------------------/
     //many to many (user and category) relationship
             modelBuilder.Entity<UserCategory>()
             .HasKey(uc => new { uc.UserId, uc.CategoryId });
@@ -50,20 +51,7 @@ namespace BlogApp.Models.Data
                 .WithMany(c => c.UsersCategories)
                 .HasForeignKey(uc => uc.CategoryId);
 
-   //many to many (post and category) relationship
-            modelBuilder.Entity<PostCategory>()
-           .HasKey(pc => new { pc.PostId, pc.CategoryId });
-
-            modelBuilder.Entity<PostCategory>()
-                .HasOne(pc => pc.Post)
-                .WithMany(p => p.PostsCategories)
-                .HasForeignKey(pc => pc.PostId);
-
-            modelBuilder.Entity<PostCategory>()
-                .HasOne(pc => pc.Category)
-                .WithMany(c => c.PostsCategories)
-                .HasForeignKey(pc => pc.CategoryId);
-//------/Fluend API --------------------------------------------------------------------/
+//------/Fluent API --------------------------------------------------------------------/
         }
 
     }//end BlogAppContex

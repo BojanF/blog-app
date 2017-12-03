@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BlogApp.Models;
 using Microsoft.EntityFrameworkCore;
 using BlogApp.Models.Data;
+using BlogApp.ViewModels;
 
 namespace BlogApp.Persistence.impl
 {
@@ -19,7 +20,12 @@ namespace BlogApp.Persistence.impl
 
         public IQueryable<Post> GetAllPosts()
         {
-            var rez = context.Posts.Where(p => p.Approved).Include(p => p.User).Include(p => p.PostsCategories).ThenInclude(m => m.Category);
+            /*var result = from post in context.Posts
+                         join category in context.Categories on post.CategoryId equals category.ID
+                         select post;*/
+            // var rez = context.Posts.Where(p => p.Approved).Include(p => p.UserName).Include(p => p.PostsCategories).ThenInclude(m => m.Category);
+            var rez = context.Posts.Where(p => p.Approved).Include(p => p.Category);
+          
             return rez;
         }
     }

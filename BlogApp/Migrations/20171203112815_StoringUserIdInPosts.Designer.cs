@@ -8,9 +8,10 @@ using BlogApp.Models.Data;
 namespace BlogApp.Migrations
 {
     [DbContext(typeof(BlogAppContext))]
-    partial class BlogAppContextModelSnapshot : ModelSnapshot
+    [Migration("20171203112815_StoringUserIdInPosts")]
+    partial class StoringUserIdInPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");

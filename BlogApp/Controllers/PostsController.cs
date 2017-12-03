@@ -10,20 +10,31 @@ using BlogApp.Models.Data;
 using BlogApp.Service;
 using System.Collections.ObjectModel;
 using BlogApp.Special;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.Collections;
+using BlogApp.ViewModels;
 
 namespace BlogApp.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
        
         private readonly IPostService _postService;
 
         private readonly BlogAppContext _context;
+        private readonly UserManager<ApplicationUser> _userManager; //maintaining user properties
+        private readonly ICategoryService _categoryService;
 
-        public PostsController(BlogAppContext context, IPostService postService)
+        public PostsController(BlogAppContext context, IPostService postService,
+            UserManager<ApplicationUser> userManager,ICategoryService categoryService)
         {            
             _postService = postService;
+            _categoryService = categoryService;
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Posts
@@ -33,7 +44,8 @@ namespace BlogApp.Controllers
             return View(await _postService.GetAllPosts());
         }
 
-        
+
+        // GET: Post/Comments/id
         public async Task<IActionResult> Comments(long? id, int? page)
         {
             ViewData["Header"] = "Comments";
@@ -54,61 +66,91 @@ namespace BlogApp.Controllers
             }
 
             var post = await _postService.GetByIdDetailed(id);
-
+            var commentsForPost = _postService.CommentsForPost(id);
+           
+            PostDetailsWithCommentsViewModel vm = new PostDetailsWithCommentsViewModel(post, commentsForPost);
+            
             if (post == null )
             {
                 return NotFound();
             }
             
+            
             ViewData["Header"] = post.Headline;
             ViewData["Message"] = "Posted by ";
-            ViewData["Autor"] = post.User.Username;
-            ViewData["Count"] = post.Comments.Count();
+            ViewData["Autor"] = post.UserName;
+            ViewData["Count"] = commentsForPost.Count();
+            vm.Post.Comments = commentsForPost.ToList();
             ViewData["Posted"] = " on " + post.PostedAt.ToString();
 
-            return View(post);
+            return View(vm);
         }
-               
+
+        // POST: Posts/Details
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(long? id,Comment comment)
+        {
+            
+            Post post = await _postService.GetByIdDetailed(id);
+            //var commentsForPost = _postService.CommentsForPost(id);
+            //vm = new PostDetailsWithCommentsViewModel(post, commentsForPost);
+            ApplicationUser userId = await _userManager.GetUserAsync(User);
+            
+            comment.Users = userId;
+            comment.Post = post;
+            comment.CommentedAt = DateTime.Now;
+            await _postService.InsertComment(comment);//inserting comment
+
+            return RedirectToAction("Details");
+        }
+
         // GET: Posts/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             ViewData["Header"] = "BlogApp";
+            List<Category> categoriesList = new List<Category>();
+            categoriesList = await _categoryService.GetAllCategories();
+            categoriesList.Insert(0, new Category { ID = 0, CategoryName = "Select" });//Inserting Select item in the List(only View)
+
+            ViewBag.ListOfCategories = categoriesList;
             return View();
         }
 
         // POST: Posts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Post post)
-        public async Task<IActionResult> Create([Bind("ID,Headline,Caption,PostedText")] Post post)
+        public async Task<IActionResult> Create(CreatePostViewModel newPostViewModel)
         {
-            post.Headline = "h1";
-            post.Caption = "caption";
-            post.PostedText = "lakljkldjkldjklsd";
-            post.Likes = 0;
-            post.Approved = true;
-            post.PostedAt = DateTime.Now;
-            post.Edited = false;
-            post.User = _context.Users.Where(m => m.ID == 1).First();
-            
-            /*ICollection<Comment> Comments = new Collection<Comment>();
-            post.Comments = Comments;
-            ICollection<PostCategory> Categories = new Collection<PostCategory>();
-            post.PostsCategories = Categories;*/
-            //var errors = ModelState.Values.SelectMany(v => v.Errors);
-            //System.Diagnostics.Debug.WriteLine(errors);
-            if (ModelState.IsValid)
-            {      
-                await _postService.Insert(post);
-                return RedirectToAction("Index");
+
+            if (newPostViewModel.post.CategoryId == 0) {
+                ModelState.AddModelError("", "Select Category");
             }
+            else {
+                long SelectedValue = newPostViewModel.post.CategoryId;
+                //ViewBag.SelectedValue =category.id;
+
+                newPostViewModel.post.Likes = 0;
+                newPostViewModel.post.Approved = true;
+                newPostViewModel.post.PostedAt = DateTime.Now;
+                newPostViewModel.post.Edited = false;
+                var userName = _userManager.GetUserName(User);
+                newPostViewModel.post.UserName = userName;
+                ApplicationUser userId = await _userManager.GetUserAsync(User);
+                newPostViewModel.post.UserId = userId;
+                newPostViewModel.post.CategoryId = SelectedValue;
+            }
+
+            await _postService.Insert(newPostViewModel.post);
+                return RedirectToAction("Index");
+            
             /*else
             {
                 return NotFound();
             }*/
-            return View(post);
+           // return View(post);
         }
 
         // GET: Posts/Edit/5
@@ -130,7 +172,6 @@ namespace BlogApp.Controllers
 
         // POST: Posts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("ID,Headline,Caption,PostedText,Likes,Approved,PostedAt,Edited")] Post post)

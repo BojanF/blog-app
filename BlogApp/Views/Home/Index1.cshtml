@@ -1,0 +1,55 @@
+<!--model IEnumerable<BlogApp.Models.Post>-->
+@model BlogApp.Special.PaginatedList<BlogApp.Models.Post>
+    @{
+        ViewData["Title"] = "Home Page";
+    }
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                @foreach (var PostsList in Model)
+            {
+                    <div class="post-preview">
+                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@PostsList.ID">
+                            <h2 class="post-title">
+                                @PostsList.Headline
+                            </h2>
+                        </a>
+                        @foreach (var cat in @PostsList.PostsCategories)
+                        {
+                            <a href="#"> | @cat.Category.CategoryName |</a>
+
+                        }
+                        <blockquote>
+                            @PostsList.Caption
+                        </blockquote>
+
+
+                        <p class="post-meta">Posted by <a href="#">@PostsList.UserName</a> on @PostsList.PostedAt.ToString()</p>
+                    </div>
+                    <hr>
+                }
+
+                <!-- Pager -->
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
+                <ul class="pager">
+                    <li class="previous">
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           class="btn btn-default @prevDisabled">
+                            &larr; Newer
+                        </a>
+                    </li>
+                    <li class="next">
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           class="btn btn-default @nextDisabled">
+                            Older &rarr;
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>

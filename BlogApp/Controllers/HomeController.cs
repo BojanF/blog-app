@@ -7,16 +7,22 @@ using BlogApp.Service;
 using BlogApp.Special;
 using BlogApp.Models;
 using BlogApp.Models.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using BlogApp.ViewModels;
 
 namespace BlogApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private IHomePageService service;
         
 
-        public HomeController(IHomePageService service)
+        public HomeController(IHomePageService service, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             this.service = service;
         }
 
@@ -29,11 +35,22 @@ namespace BlogApp.Controllers
         public async Task<IActionResult> Index(int? page)
         {
             
-            ViewData["Header"] = "BlogApp";
-           
-            var posts = service.GetAllPosts();
-            int pageSize = 3;
-            return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
+                ViewData["Header"] = "BlogApp";
+                ApplicationUser user = _userManager.GetUserAsync
+                              (HttpContext.User).Result;
+
+                ViewBag.Message = $"Welcome {user.UserName}!";
+            //IQueryable<CreatePostViewModel> postss = service.GetAllPosts();
+                var posts = service.GetAllPosts();              
+                int pageSize = 3;
+                return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
+        }
+            
+
+        
+        public IActionResult AccessGraanted() {
+            return View();
+            
         }
 
         public IActionResult About()

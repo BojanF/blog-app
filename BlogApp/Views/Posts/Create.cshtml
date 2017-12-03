@@ -1,4 +1,4 @@
-@model BlogApp.Models.Post
+@model BlogApp.ViewModels.CreatePostViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -9,7 +9,7 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <h2>Create new post</h2>
 
-            <form asp-action="Create">
+            <form asp-controller="Posts" asp-action="Create" method="post">
                 <div class="">
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -63,36 +63,51 @@
                                 <label asp-for="Edited"></label>
                             </div>
                         </div>
-                    </div>-->
+                    </div>------------Admin can aprove post handle with razors syntax  -->
                     
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label asp-for="Headline" class="control-label"></label>
-                            <input asp-for="Headline" placeholder="Headline" class="form-control" />
-                            <span asp-validation-for="Headline" class="text-danger"></span>
+                            <label asp-for="@Model.post.Headline" class="control-label"></label>
+                            <input asp-for="@Model.post.Headline" placeholder="Headline" class="form-control" />
+                            <span asp-validation-for="@Model.post.Headline" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">                            
-                            <label asp-for="Caption" class="control-label"></label>
-                            <input asp-for="Caption" placeholder="Caption" class="form-control" />
-                            <span asp-validation-for="Caption" class="text-danger"></span>
+                            <label asp-for="@Model.post.Caption" class="control-label"></label>
+                            <input asp-for="@Model.post.Caption" placeholder="Caption" class="form-control" />
+                            <span asp-validation-for="@Model.post.Caption" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">                            
-                            <label asp-for="PostedText" class="control-label"></label>
+                            <label asp-for="@Model.post.PostedText" class="control-label"></label>
                             
-                            <textarea rows="5" class="form-control" asp-for="PostedText" placeholder="Post"></textarea>
+                            <textarea rows="5" class="form-control" asp-for="@Model.post.PostedText" placeholder="Post"></textarea>
 
-                            <span asp-validation-for="PostedText" class="text-danger"></span>
+                            <span asp-validation-for="@Model.post.PostedText" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="col-md-2 control">
+                            <label asp-for="@Model.category.CategoryName" ></label>
+                            <select asp-for="@Model.post.CategoryId" asp-items="@(new SelectList(@ViewBag.ListOfCategories,"ID","CategoryName"))"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input id="SubmitPost" type="submit" value="Post it" class="btn btn-default" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                @if (ViewBag.SelectedValue != null) {
+                                   <text>Selected CategoryID:</text> @ViewBag.SelectedValue;
+                                }
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </form>
 

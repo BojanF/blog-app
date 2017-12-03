@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BlogApp.Models;
 using BlogApp.Models.Data;
 using BlogApp.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogApp.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         

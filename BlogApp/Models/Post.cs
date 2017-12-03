@@ -29,12 +29,17 @@ namespace BlogApp.Models {
 
 
         public ICollection<Comment> Comments { get; set; } //one post has many comments (1 to m)
-        public ICollection<PostCategory> PostsCategories { get; set; } // many categories contains many posts
 
         //[ForeignKey("UserId")]
         [Required]
-        public User User { get; set;} // Posts entity can hold one User
-        
+        public string UserName { get; set;} // Posts entity can hold one User
+        [Required]
+        public ApplicationUser UserId { get; set; }
+
+        [Required, ForeignKey("CategoryId")]
+        public long CategoryId { get; set; }
+        public Category Category{ get; set; }
+
         public String PostedAtToString()
         {
             String Month = null;

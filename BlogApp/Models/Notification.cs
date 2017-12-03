@@ -19,6 +19,6 @@ namespace BlogApp.Models
              
         //[ForeignKey("UserId")]
         [Required]
-        public User User { get; set; }//(EF handle fk itslef)
+        public ApplicationUser User { get; set; }//(EF handle fk itslef)
     }//end Notification class
 }
