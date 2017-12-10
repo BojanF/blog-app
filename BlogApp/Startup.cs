@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlogApp.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Google;
+//using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using MySQL.Data.EntityFrameworkCore.Extensions;
 using BlogApp.Service;
@@ -46,7 +46,7 @@ namespace BlogApp
             
             //db connection
             var DbConnection = @"server=kostancev.com;user id=BojanF;password=lozinka_lab5;database=blogApp;persistsecurityinfo=True;SslMode=none;";
-            services.AddDbContext<BlogAppContext>(options => options.UseMySql(DbConnection));
+            services.AddDbContext<BlogAppContext>(options => options.UseMySQL(DbConnection));
             //user auth
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<BlogAppContext>()
@@ -109,10 +109,10 @@ namespace BlogApp
 
             app.UseIdentity();
 
-            app.UseGoogleAuthentication(new GoogleOptions() {
+            /*app.UseGoogleAuthentication(new GoogleOptions() {
                 ClientId = "439358740378-iv6408bsso73gen0vl4sjd4lb39hbm76.apps.googleusercontent.com",
                 ClientSecret = "33S2E0Pao7UqY8KHU4z_R4Fl"
-            });
+            });*/
 
             app.UseMvc(routes =>
             {

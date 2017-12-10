@@ -26,8 +26,8 @@ namespace BlogApp.Models {
         [Required]
         public String Email { get; set; }
         [Required]
-        public String Password { get; set; }
-        
+        public String Password { get; set; }        
+
         [Column("role")]
         [Required]
         public String RoleType {

@@ -19,6 +19,6 @@ namespace BlogApp.Models {
         // [ForeignKey("PostId")]
         [Required]
         public Post Post { get; set; } // Comments entity can hold one Post(EF handle fk itslef)
-
+           
     }// end Comments class
 }
