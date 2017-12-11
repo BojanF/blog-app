@@ -1,11 +1,28 @@
 ﻿<!--model IEnumerable<BlogApp.Models.Post>-->
 @model BlogApp.Special.PaginatedList<BlogApp.Models.Post>
+
 @{
     ViewData["Title"] = "Home Page";
 }
-
+@{
+    var sortingCriteria = ViewBag.SortingCriteria;
+}
 <div class="container">
     <div class="row">
+  <!--     <div>
+            <select id="Sort_items" name="Sort items">
+                <option selected="selected" value="0">Newest</option>
+                <option value="1">Oldest</option>
+                <option value="2">Headline</option>
+                <option value="3">User</option>
+            </select>
+        </div> --> 
+        <div> <strong>Order by: </strong> 
+            @Html.ActionLink("Date(Newest)", "Index", "Home", new { criteria = 0, currentCriteria = ViewBag.currentCriteria })
+            @Html.ActionLink("Date(Oldest)", "Index", "Home", new { criteria = 1, currentCriteria = ViewBag.currentCriteria })
+            @Html.ActionLink("Headline", "Index", "Home", new { criteria = 2, currentCriteria = ViewBag.currentCriteria })
+            @Html.ActionLink("User", "Index", "Home", new { criteria = 3, currentCriteria = ViewBag.currentCriteria })
+        </div>
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             @foreach (var PostsList in Model)
             {
@@ -14,43 +31,53 @@
                         <h2 class="post-title">
                             @PostsList.Headline
                         </h2>
-                    </a>  
-                        
-                        <a href="#"> | @PostsList.Category.CategoryName |</a>
+                    </a>
 
-                        <blockquote>
-                            @PostsList.Caption
-                        </blockquote>
+                    <a href="#"> | @PostsList.Category.CategoryName |</a>
 
+                    <blockquote>
+                        @PostsList.Caption
+                    </blockquote>
 
-                    
                     <p class="post-meta">Posted by <a href="#">@PostsList.UserName</a> on @PostsList.PostedAt.ToString()</p>
 
                 </div>
                 <hr>
             }
-            
+
             <!-- Pager -->
+
+
+
             @{
                 var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
                 var nextDisabled = !Model.HasNextPage ? "disabled" : "";
             }
             <ul class="pager">
                 <li class="previous">
-                    <a asp-action="Index"                      
+                    <a asp-action="Index"
+                       asp-route-criteria="@sortingCriteria"
                        asp-route-page="@(Model.PageIndex - 1)"
+
                        class="btn btn-default @prevDisabled">
-                       &larr; Newer
+                        &larr;
                     </a>
                 </li>
                 <li class="next">
-                    <a asp-action="Index"                      
+                    <a asp-action="Index"
+                       asp-route-criteria="@sortingCriteria"
                        asp-route-page="@(Model.PageIndex + 1)"
                        class="btn btn-default @nextDisabled">
-                       Older &rarr;
+                        &rarr;
                     </a>
                 </li>
             </ul>
         </div>
+
     </div>
+    
 </div>
+
+<script>
+
+</script>

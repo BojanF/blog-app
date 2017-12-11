@@ -32,22 +32,41 @@ namespace BlogApp.Controllers
             return View(PostsList);
         }*/
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int criteria, int? page)
         {
-            
-                ViewData["Header"] = "BlogApp";
-                ApplicationUser user = _userManager.GetUserAsync
-                              (HttpContext.User).Result;
 
-                ViewBag.Message = $"Welcome {user.UserName}!";
+            ViewData["Header"] = "BlogApp";
+            ApplicationUser user = _userManager.GetUserAsync
+                            (HttpContext.User).Result;
+
+            ViewBag.Message = $"Welcome {user.UserName}!";
             //IQueryable<CreatePostViewModel> postss = service.GetAllPosts();
-                var posts = service.GetAllPosts();              
-                int pageSize = 3;
-                return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
-        }
-            
+            var posts = service.GetAllPosts();
 
-        
+            //test
+
+            switch (criteria)
+            {
+                case 0:
+                    posts = posts.OrderByDescending(service => service.PostedAt);
+                    break;
+                case 1:
+                    posts = posts.OrderBy(service => service.PostedAt);
+                    break;
+                case 2:
+                    posts = posts.OrderBy(service => service.Headline);
+                    break;
+                case 3:
+                    posts = posts.OrderBy(service => service.UserName);
+                    break;
+            }
+
+            //posts = posts.OrderByDescending(service => service.PostedAt); //sort by date
+            int pageSize = 3;
+            ViewBag.SortingCriteria = criteria;
+            return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
+        }
+
         public IActionResult AccessGraanted() {
             return View();
             
