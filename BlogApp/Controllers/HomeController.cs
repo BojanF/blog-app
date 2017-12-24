@@ -31,7 +31,7 @@ namespace BlogApp.Controllers
             var PostsList = service.GetAllPosts();
             return View(PostsList);
         }*/
-
+        // GET: Index
         public async Task<IActionResult> Index(int criteria, int? page)
         {
 

@@ -5,24 +5,42 @@
     ViewData["Title"] = "Home Page";
 }
 @{
-    var sortingCriteria = ViewBag.SortingCriteria;
+    int sortingCriteria = ViewBag.SortingCriteria;
+    var currentCriteria = ViewBag.currentCriteria;
 }
 <div class="container">
     <div class="row">
-  <!--     <div>
-            <select id="Sort_items" name="Sort items">
-                <option selected="selected" value="0">Newest</option>
-                <option value="1">Oldest</option>
-                <option value="2">Headline</option>
-                <option value="3">User</option>
-            </select>
-        </div> --> 
-        <div> <strong>Order by: </strong> 
-            @Html.ActionLink("Date(Newest)", "Index", "Home", new { criteria = 0, currentCriteria = ViewBag.currentCriteria })
-            @Html.ActionLink("Date(Oldest)", "Index", "Home", new { criteria = 1, currentCriteria = ViewBag.currentCriteria })
-            @Html.ActionLink("Headline", "Index", "Home", new { criteria = 2, currentCriteria = ViewBag.currentCriteria })
-            @Html.ActionLink("User", "Index", "Home", new { criteria = 3, currentCriteria = ViewBag.currentCriteria })
+
+        <div class="dropdown pull-right">
+            <button class="btn btn-default dropdown-toggle" type="button" id="orderBy" data-toggle="dropdown">
+                 
+                @switch (sortingCriteria)
+                {
+                    case 0:
+                        <span class="fa fa-align-justify">Newest</span>
+                        break;
+                    case 1:
+                        <span class="fa fa-align-justify">Oldest</span>
+                        break;
+                    case 2:
+                        <span class="fa fa-align-justify">Headline</span>
+                        break;
+                    case 3:
+                        <span class="fa fa-align-justify">Users</span>
+                        break;
+                }
+                            
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="orderBy">
+                <li>@Html.ActionLink("Date(Newest)", "Index", "Home", new { criteria = 0})</li>
+                <li> @Html.ActionLink("Date(Oldest)", "Index", "Home", new { criteria = 1})</li>
+                <li> @Html.ActionLink("Headline", "Index", "Home", new { criteria = 2})</li>
+                <li> @Html.ActionLink("User", "Index", "Home", new { criteria = 3})</li>
+
+            </ul>
         </div>
+
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             @foreach (var PostsList in Model)
             {
@@ -61,6 +79,7 @@
 
                        class="btn btn-default @prevDisabled">
                         &larr;
+                        Previous
                     </a>
                 </li>
                 <li class="next">
@@ -68,6 +87,7 @@
                        asp-route-criteria="@sortingCriteria"
                        asp-route-page="@(Model.PageIndex + 1)"
                        class="btn btn-default @nextDisabled">
+                        Next
                         &rarr;
                     </a>
                 </li>
