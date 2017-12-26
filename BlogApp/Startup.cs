@@ -19,6 +19,8 @@ using BlogApp.Persistence;
 using BlogApp.Persistence.impl;
 using BlogApp.Controllers;
 using BlogApp.Models;
+using BlogApp.Special;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogApp
 {
@@ -121,7 +123,7 @@ namespace BlogApp
                     template: "{controller=Account}/{action=Login}/{id?}");
             });
 
-
+            new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
 
         }
     }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace BlogApp.Models.enums {
     public enum UserRole {
-        ADMIN,
-        USER,
-        MODERATOR
+        Admin,
+        Moderator,
+        User
     }//end UserRole class
 }
