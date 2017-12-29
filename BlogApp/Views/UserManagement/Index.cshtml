@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using BlogApp.Models;
+@model BlogApp.ViewModels.UserManagementIndexViewModel
+@inject UserManager<ApplicationUser> userManager
+@{
+    ViewData["Title"] = "User Managment Page";
+}
+
+<div class="container-fluid">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Email</td>
+                <td>Roles</td>
+                <td>Options</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@(string.Join(",",await userManager.GetRolesAsync(user)))</td>
+                    <td><a asp-controller="UserManagement" asp-action="AddRole" asp-route-id="@user.Id">
+                        Add Role</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

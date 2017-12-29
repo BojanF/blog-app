@@ -89,6 +89,9 @@ namespace BlogApp
             services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<IPostRepo, PostRepoImpl>();
 
+            services.AddTransient<IAdminService,AdminServiceImpl>();
+            services.AddTransient<IAdminRepo, AdminRepoImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
