@@ -133,7 +133,7 @@ namespace BlogApp.Controllers
                 //ViewBag.SelectedValue =category.id;
 
                 newPostViewModel.post.Likes = 0;
-                newPostViewModel.post.Approved = true;
+                newPostViewModel.post.Approved = false;
                 newPostViewModel.post.PostedAt = DateTime.Now;
                 newPostViewModel.post.Edited = false;
                 var userName = _userManager.GetUserName(User);
@@ -144,7 +144,7 @@ namespace BlogApp.Controllers
             }
 
             await _postService.Insert(newPostViewModel.post);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             
             /*else
             {

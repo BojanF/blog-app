@@ -1,0 +1,47 @@
+@using BlogApp.Models;
+@model BlogApp.ViewModels.ApprovePostsIndexViewModel
+
+@{
+    ViewData["Title"] = "Approving Posts";
+    var postsSize = Model.Posts.Count;
+}
+<div class="container-fluid">
+    @if (postsSize != 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <td><strong>Headline</strong></td>
+                    <td><strong>Username</strong></td>
+                    <td><strong>Category</strong></td>
+                    <td><strong>Approve</strong></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Model.Posts)
+                {
+
+                    <tr>
+                        <td>@post.Headline</td>
+                        <td>@post.UserName</td>
+                        <td>@post.Category.CategoryName</td>
+                        <td>
+                            <a class="btn btn-success btn-xs" asp-action="Update" asp-route-id="@post.ID">
+                                <i class="fa fa-check"></i>Aprove
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+
+    }
+    else { 
+        <div class="row">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center text-info">All posts are approved!</div>
+            </div>
+        </div>
+    }
+</div>

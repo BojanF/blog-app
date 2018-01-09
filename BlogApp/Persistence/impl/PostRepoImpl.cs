@@ -33,10 +33,12 @@ namespace BlogApp.Persistence.impl
 
         public Task<Post> GetById(long? id)
         {
-            return _context.Posts.SingleOrDefaultAsync(m => m.ID == id);
+
+            //return _context.Posts.Where(m => m.ID == id).Include(p => p.UserId);
+            return _context.Posts.Include(p => p.UserId).Include(p => p.Category).SingleOrDefaultAsync(m => m.ID == id);
         }
 
-            public Task<Post> GetByIdDetailded(long? id)
+        public Task<Post> GetByIdDetailded(long? id)
         {
             // return _context.Posts.Include(p => p.UserName).Include(p=> p.PostsCategories).ThenInclude(p => p.Category).SingleOrDefaultAsync(p => p.ID == id && p.Approved);
             return _context.Posts.Where(p => p.Approved).SingleOrDefaultAsync(p => p.ID == id && p.Approved);

@@ -8,6 +8,7 @@ namespace BlogApp.Persistence
 {
     public interface IAdminRepo
     {
+        List<Post> GetAllUnApprovedPostsForAdmin(string UserId);
         List<ApplicationUser> GetAllUsers();
     }
 }

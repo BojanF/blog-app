@@ -1,0 +1,22 @@
+@model BlogApp.Models.Post
+@{
+    ViewData["Title"] = "Approving Posts";
+    
+}
+<div class="container-fluid">
+    <div class="row">
+        <h2 class="text-center">@Model.Headline</h2>
+        <hr />
+        <blockquote>@Model.Caption</blockquote>
+        <p>@Model.PostedText</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <form asp-action="Update">
+                <button type="submit" class="btn btn-success btn-block" >Approve</button>
+            </form>
+        </div>
+    </div>
+</div>
+

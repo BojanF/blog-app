@@ -21,6 +21,7 @@ using BlogApp.Controllers;
 using BlogApp.Models;
 using BlogApp.Special;
 using Microsoft.AspNetCore.Identity;
+using BlogApp.Services;
 
 namespace BlogApp
 {
@@ -92,6 +93,12 @@ namespace BlogApp
             services.AddTransient<IAdminService,AdminServiceImpl>();
             services.AddTransient<IAdminRepo, AdminRepoImpl>();
 
+            services.AddTransient<IUserService, UserServiceImpl>();
+            services.AddTransient<IUserRepo, UserRepoImpl>();
+
+            services.AddTransient<IUserCategoryService, UserCategoryServiceImpl>();
+            services.AddTransient<IUserCategoryRepo, UserCategoryRepoImpl>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
