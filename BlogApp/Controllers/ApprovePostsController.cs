@@ -15,7 +15,7 @@ using BlogApp.Model;
 
 namespace BlogApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin,Moderator")]
     public class ApprovePostsController : Controller
     {
         private readonly IAdminService _adminService;
@@ -40,8 +40,7 @@ namespace BlogApp.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        //i should generate list with unapprowed posts with all categories(admin)
-        //or i should wirte a service where the service can give me unapproved posts for passed category(moderator)
+
         // GET :Index
         [HttpGet]
         public async Task<IActionResult> Index()

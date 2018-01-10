@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BlogApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserManagementController : Controller
     {
 

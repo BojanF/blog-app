@@ -6,6 +6,13 @@
     <UserSecretsId>aspnet-BlogApp-74BAC790-C5DD-44AB-9E43-B4A5A4C190E0</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Content\**" />
+    <Content Remove="Content\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <None Remove="Content\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlogApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Moderator")]
     public class CategoriesController : Controller
     {
         

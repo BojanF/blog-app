@@ -19,7 +19,6 @@ namespace BlogApp.Controllers
         //dependency injecting 
         private readonly UserManager<ApplicationUser> _userManager; //maintaining user properties
         private readonly SignInManager<ApplicationUser> _signInManager; // user log in/out
-        //private readonly ILogger _logger;
 
         public AccountController(UserManager<ApplicationUser> userManager, 
                                     SignInManager<ApplicationUser> signInManager)
@@ -32,7 +31,8 @@ namespace BlogApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            ViewBag.Title = "Login Page";
+            ViewBag.Title = "Sign Page";
+            ViewData["Header"] = "Singing in";
             return View();
         }
         // GET: Account/Register
@@ -40,6 +40,7 @@ namespace BlogApp.Controllers
         public IActionResult Register()
         {
             ViewBag.Title = "Registration Page";
+            ViewData["Header"] = "Registration";
             return View();
         }
 
@@ -113,55 +114,6 @@ namespace BlogApp.Controllers
                 }
             }
                 return View(viewModelRegister);
-        }
-
-
-
-        //-------------------------------BELOW DOESNT HAVE VIEWS its not handled-------------------------------------------------------------
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -26,11 +26,6 @@ namespace BlogApp.Controllers
             this.service = service;
         }
 
-        /*public IActionResult Index()
-        {
-            var PostsList = service.GetAllPosts();
-            return View(PostsList);
-        }*/
         // GET: Index
         public async Task<IActionResult> Index(int criteria, int? page)
         {
@@ -40,11 +35,9 @@ namespace BlogApp.Controllers
                             (HttpContext.User).Result;
 
             ViewBag.Message = $"Welcome {user.UserName}!";
-            //IQueryable<CreatePostViewModel> postss = service.GetAllPosts();
             var posts = service.GetAllPosts();
 
-            //test
-
+            //switch by criteria
             switch (criteria)
             {
                 case 0:
@@ -61,7 +54,6 @@ namespace BlogApp.Controllers
                     break;
             }
 
-            //posts = posts.OrderByDescending(service => service.PostedAt); //sort by date
             int pageSize = 3;
             ViewBag.SortingCriteria = criteria;
             return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
@@ -74,6 +66,7 @@ namespace BlogApp.Controllers
 
         public IActionResult About()
         {
+            ViewData["Header"] = "About us";
             ViewData["Message"] = "BOJAN";
 
             return View();
