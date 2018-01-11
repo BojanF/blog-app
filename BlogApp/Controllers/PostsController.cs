@@ -41,7 +41,20 @@ namespace BlogApp.Controllers
         public async Task<IActionResult> Index()
         {            
             ViewData["Header"] = "Post Title";
-            return View(await _postService.GetAllPosts());
+            var user = await GetCurrentUserAsync();
+            string userId = user?.Id;
+            if (User.IsInRole("Admin"))
+            {
+                return View(await _postService.GetAllPosts());
+            }
+            else if (User.IsInRole("Moderator")) {
+                return View(_postService.GetAllPostsForModerator(userId));
+            }
+            else
+            {
+                return View(_postService.GetAllPostsForUser(userId));
+            }
+            
         }
 
 
@@ -72,7 +85,7 @@ namespace BlogApp.Controllers
             
             if (post == null )
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             
             
@@ -229,6 +242,7 @@ namespace BlogApp.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
     }
 }

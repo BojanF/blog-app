@@ -10,6 +10,10 @@ namespace BlogApp.Service
     {
         Task<List<Post>> GetAllPosts();
 
+        List<Post> GetAllPostsForModerator(string userId);
+
+        List<Post> GetAllPostsForUser(string userId);
+
         Task<Post> GetById(long? id);
 
         Task<Post> GetByIdDetailed(long? id);
