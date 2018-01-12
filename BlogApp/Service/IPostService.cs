@@ -8,9 +8,7 @@ namespace BlogApp.Service
 {
     public interface IPostService
     {
-        Task<List<Post>> GetAllPosts();
-
-        List<Post> GetAllPostsForModerator(string userId);
+        Task<List<Post>> GetAllPosts();        
 
         List<Post> GetAllPostsForUser(string userId);
 

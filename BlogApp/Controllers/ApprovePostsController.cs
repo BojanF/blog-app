@@ -48,9 +48,20 @@ namespace BlogApp.Controllers
             ViewData["Header"] = "Approving Posts";
             var user = await GetCurrentUserAsync();
             string userId = user?.Id;
-            var vm = new ApprovePostsIndexViewModel()
+            List<Post> unapprovedPosts;
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if (userRoles.Contains("Admin"))
             {
-                Posts = _adminService.GetAllUnApprovedPostsForAdmin(userId)
+                unapprovedPosts = _adminService.GetAllUnApprovedPostsForAdmin(userId);
+            }
+            else
+            {
+                unapprovedPosts = _userService.GetAllUnApprovedPostsForModerator(userId);
+            }
+
+            var vm = new ApprovePostsIndexViewModel()
+            {                
+                Posts = unapprovedPosts
             };
 
             return View(vm);
@@ -111,8 +122,8 @@ namespace BlogApp.Controllers
 
                     //try catch block fali
                     await _userCategoryService.Insert(obj);
-                    //var user = await GetUserById(rvm.UserId);
-                    //var result = await _userManager.AddToRoleAsync(post.UserId,, rvm.NewRole);
+                    //try-catch block mozda treba da se stavi
+                    var result = await _userManager.AddToRoleAsync(post.UserId, "Moderator");
 
                 }
             //}

@@ -14,6 +14,7 @@
                     <td><strong>Headline</strong></td>
                     <td><strong>Username</strong></td>
                     <td><strong>Category</strong></td>
+                    <td><strong>Posted at</strong></td>
                     <td><strong>Approve</strong></td>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                         <td>@post.Headline</td>
                         <td>@post.UserName</td>
                         <td>@post.Category.CategoryName</td>
+                        <td>@post.PostedAt</td>
                         <td>
                             <a class="btn btn-success btn-xs" asp-action="Update" asp-route-id="@post.ID">
                                 <i class="fa fa-check"></i>Aprove

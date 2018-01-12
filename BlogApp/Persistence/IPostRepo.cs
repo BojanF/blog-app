@@ -13,8 +13,6 @@ namespace BlogApp.Persistence
 
         List<Post> GetAllPostsForUser(string userId);
 
-        List<Post> GetAllPostsForModerator(string userId);
-
         Task<Post> GetById(long? id);
 
         Task<Post> GetByIdDetailded(long? id);

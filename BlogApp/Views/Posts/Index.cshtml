@@ -16,14 +16,8 @@
                                 @Html.DisplayNameFor(model => model.Headline)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Caption)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PostedText)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Likes)
-                            </th>
+                                Category
+                            </th>                            
                             <th>
                                 @Html.DisplayNameFor(model => model.Approved)
                             </th>
@@ -44,27 +38,41 @@
                                     @Html.DisplayFor(modelItem => item.Headline)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Caption)
-                                </td>
-                                <td>
-                                   @item.PostedText.ToString()
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Likes)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Approved)
+                                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                </td>                                
+                                <td>                                                                   
+                                    @if (item.Approved)
+                                    {
+                                        <span class="label label-success">YES</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-danger">NO</span>
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.PostedAt)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Edited)
+                                    @if (item.Edited)
+                                    {
+                                        <span class="label label-success">YES</span>
+
+                                    }
+                                    else{ 
+                                        <span class="label label-danger">NO</span>
+                                    }
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                                    <a class="btn btn-xs btn-success" asp-action="Edit" asp-route-id="@item.ID">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                                    </a> 
+                                    <a class="btn btn-xs btn-default" asp-action="Details" asp-route-id="@item.ID">
+                                        <i class="fa fa-info" aria-hidden="true"></i> Details
+                                    </a> 
+                                    <a class="btn btn-xs btn-danger" asp-action="Delete" asp-route-id="@item.ID">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+                                     </a>
                                 </td>
                             </tr>
                         }

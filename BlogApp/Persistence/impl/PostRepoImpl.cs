@@ -30,12 +30,11 @@ namespace BlogApp.Persistence.impl
         {
             return _context.Posts.ToListAsync();
         }
+
         public List<Post> GetAllPostsForUser(string userId) {
-            return _context.Posts.Where(pu => pu.UserId.Id == userId).ToList();
-        }
-        public List<Post> GetAllPostsForModerator(string userId) {
             return _context.Posts.Where(pu => pu.UserId.Id == userId).Include(p => p.Category).ToList();
         }
+
         public Task<Post> GetById(long? id)
         {
             return _context.Posts.Include(p => p.UserId).Include(p => p.Category).SingleOrDefaultAsync(m => m.ID == id);

@@ -25,10 +25,6 @@ namespace BlogApp.Service
             return _repository.GetAllPosts();
         }
 
-        public List<Post> GetAllPostsForModerator(string userId) {
-            return _repository.GetAllPostsForModerator(userId);
-        }
-
         public List<Post> GetAllPostsForUser(string userId) {
             return _repository.GetAllPostsForUser(userId);
         }

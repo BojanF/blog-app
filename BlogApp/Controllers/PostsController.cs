@@ -40,21 +40,10 @@ namespace BlogApp.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {            
-            ViewData["Header"] = "Post Title";
+            ViewData["Header"] = "Your posts";
             var user = await GetCurrentUserAsync();
-            string userId = user?.Id;
-            if (User.IsInRole("Admin"))
-            {
-                return View(await _postService.GetAllPosts());
-            }
-            else if (User.IsInRole("Moderator")) {
-                return View(_postService.GetAllPostsForModerator(userId));
-            }
-            else
-            {
-                return View(_postService.GetAllPostsForUser(userId));
-            }
-            
+            string userId = user?.Id;            
+            return View(_postService.GetAllPostsForUser(userId));
         }
 
 

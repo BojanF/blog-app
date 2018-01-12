@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogApp.Models;
 
 namespace BlogApp.Service.impl
 {
@@ -19,6 +20,11 @@ namespace BlogApp.Service.impl
          
         public int CountPostsFromUserForCategory(string userId, string CategoryName) {
             return _repository.CountPostsFromUserForCategory(userId, CategoryName);
+        }
+
+        public List<Post> GetAllUnApprovedPostsForModerator(string UserId)
+        {
+            return _repository.GetAllUnApprovedPostsForModerator(UserId);
         }
     }
 }
