@@ -43,7 +43,7 @@ namespace BlogApp.Persistence.impl
         public Task<Post> GetByIdDetailded(long? id)
         {
             // return _context.Posts.Include(p => p.UserName).Include(p=> p.PostsCategories).ThenInclude(p => p.Category).SingleOrDefaultAsync(p => p.ID == id && p.Approved);
-            return _context.Posts.SingleOrDefaultAsync(p => p.ID == id && p.Approved);
+            return _context.Posts.SingleOrDefaultAsync(p => p.ID == id);
         
         }
 
@@ -75,6 +75,17 @@ namespace BlogApp.Persistence.impl
         {
             
             return _context.Comments.Where(c => c.Post.ID == id).Include(c => c.Users).OrderByDescending(c => c.CommentedAt);
+        }
+
+        public Category getCategoryForPost(long postId)
+        {
+            return _context.Posts.Include(p => p.Category).Where(p => p.ID == postId).Select(p => p.Category).Single();
+            //return posts.First().CategoryId;
+        }
+
+        public DateTime getPostedAtForPost(long postId)
+        {
+            return _context.Posts.Where(p => p.ID == postId).Select(p => p.PostedAt).Single();
         }
         
     }

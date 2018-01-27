@@ -29,5 +29,9 @@ namespace BlogApp.Persistence
 
         IQueryable<Comment> CommentsForPost(long? id);
 
+        Category getCategoryForPost(long postId);
+
+        DateTime getPostedAtForPost(long postId);
+
     }
 }

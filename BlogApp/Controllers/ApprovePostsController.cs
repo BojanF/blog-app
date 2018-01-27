@@ -108,10 +108,10 @@ namespace BlogApp.Controllers
             }
 
             var userRoles = await _userManager.GetRolesAsync(post.UserId);
-           // if (userRoles.Contains("Admin"))
-           // {
-                int countPostsForCategory = _userService.CountPostsFromUserForCategory(post.UserId.Id, post.Category.CategoryName);
-                if (countPostsForCategory >= post.Category.PostRule)
+            if (!userRoles.Contains("Admin"))
+            {
+                int countPostsForCategory = _userService.CountApprovedPostsFromUserForCategory(post.UserId.Id, post.Category.ID);                
+                if (countPostsForCategory == post.Category.PostRule)
                 {
                     //zapisi u baza kaj m-n relacijata
                     UserCategory obj = new UserCategory();
@@ -119,16 +119,13 @@ namespace BlogApp.Controllers
                     obj.User = post.UserId;
                     obj.CategoryId = post.CategoryId;
                     obj.Category = post.Category;
-
-                    //try catch block fali
+                    
                     await _userCategoryService.Insert(obj);
-                    //try-catch block mozda treba da se stavi
                     var result = await _userManager.AddToRoleAsync(post.UserId, "Moderator");
 
                 }
-            //}
+            }
             
-
             return  RedirectToAction("Index");
         }
 

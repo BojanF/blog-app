@@ -28,5 +28,9 @@ namespace BlogApp.Service
 
         Task<Comment> InsertComment(Comment comment);
 
+        Category getCategoryForPost(long postId);
+
+        DateTime getPostedAtForPost(long postId);
+
     }
 }

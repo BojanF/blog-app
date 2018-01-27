@@ -1,4 +1,5 @@
 ﻿using BlogApp.Model;
+using BlogApp.Models;
 using BlogApp.Persistence;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,20 @@ namespace BlogApp.Service.impl
         {
             _repository = repository;
         }
+
         public async Task<UserCategory> Insert(UserCategory userCategory)
         {
             return await _repository.Insert(userCategory);
+        }
+
+        public List<ApplicationUser> FindModeratorsForCategory(long categoryId)
+        {
+            return _repository.ModeratorsForCategory(categoryId);
+        }
+
+        public async Task<int> DeleteAsync(UserCategory userCategory)
+        {
+            return await _repository.DeleteAsync(userCategory);
         }
     }
 }

@@ -53,6 +53,7 @@ namespace BlogApp.Service
         {
             return _repository.Update(post);
         }
+
         public IQueryable<Comment> CommentsForPost(long? id)
         {
             return _repository.CommentsForPost(id);
@@ -61,5 +62,16 @@ namespace BlogApp.Service
         public Task<Comment> InsertComment(Comment comment) {
             return _repository.InsertComment(comment);
         }
+
+        public Category getCategoryForPost(long postId)
+        {
+            return _repository.getCategoryForPost(postId);
+        }
+
+        public DateTime getPostedAtForPost(long postId)
+        {
+            return _repository.getPostedAtForPost(postId);
+        }
+
     }
 }

@@ -19,5 +19,9 @@ namespace BlogApp.Service
         bool CategoryExists(long id);
 
         Task<int> Update(Category category);
+
+        Task<Category> categoryForPost(long postId);
+
+        int CountPostsForCategory(long? categoryId);
     }
 }

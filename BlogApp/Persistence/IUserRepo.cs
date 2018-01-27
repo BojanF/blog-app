@@ -8,7 +8,14 @@ namespace BlogApp.Persistence
 {
     public interface IUserRepo
     {
-        int CountPostsFromUserForCategory(string userId, string CategoryName);
+        int CountApprovedPostsFromUserForCategory(string userId, long categoryId);
+
         List<Post> GetAllUnApprovedPostsForModerator(string UserId);
+
+        int countModeratorCategories(string userID);
+
+        List<string> AllNonAdminUsersId();
+
+        ApplicationUser getById(string userId);
     }
 }

@@ -45,5 +45,15 @@ namespace BlogApp.Service.impl
         {
             return _repository.Update(category);
         }
+
+        public async Task<Category> categoryForPost(long postId)
+        {
+            return await _repository.categoryForPost(postId);
+        }
+
+        public int CountPostsForCategory(long? categoryId)
+        {
+            return _repository.CountPostsForCategory(categoryId);
+        }
     }
 }

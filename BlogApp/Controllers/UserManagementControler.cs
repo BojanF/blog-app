@@ -47,7 +47,7 @@ namespace BlogApp.Controllers
 
 
         // GET :AddRole
-        [HttpGet]
+        [HttpGet]        
         public async Task<IActionResult> AddRole(string id) {
 
             var user = await GetUserById(id);
@@ -55,9 +55,9 @@ namespace BlogApp.Controllers
             var vm = new UserManagementAddRoleViewModel {
                 ListOfRoles = GetAllRoles(),
                 UserId = id,
-                Email = user.Email
+                UserName = user.UserName
             };
-
+            
             return View(vm);
         }
 
@@ -68,7 +68,8 @@ namespace BlogApp.Controllers
             var user = await GetUserById(rvm.UserId);
             if (ModelState.IsValid)
             {
-                var result = await _userManager.AddToRoleAsync(user, rvm.NewRole);
+                //var result = await _userManager.AddToRoleAsync(user, rvm.NewRole);
+                var result = await _userManager.AddToRoleAsync(user, "Admin");
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -79,7 +80,7 @@ namespace BlogApp.Controllers
                     }
                 }
             }
-            rvm.Email = user.Email;
+            rvm.UserName = user.UserName;
             rvm.ListOfRoles = GetAllRoles();
             return View(rvm);
         }

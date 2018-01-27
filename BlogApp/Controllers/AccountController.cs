@@ -32,7 +32,7 @@ namespace BlogApp.Controllers
         public IActionResult Login()
         {
             ViewBag.Title = "Sign Page";
-            ViewData["Header"] = "Singing in";
+            ViewData["Header"] = "Signing in";
             return View();
         }
         // GET: Account/Register
@@ -101,6 +101,7 @@ namespace BlogApp.Controllers
                 var result = await _userManager.CreateAsync(appUser, viewModelRegister.Password);//here you entering the password
                 if (result.Succeeded)
                 {
+                    var addRole = await _userManager.AddToRoleAsync(appUser, "User");
                     await _signInManager.SignInAsync(appUser, isPersistent: false);//inPersist meaning about cookie
                     //_logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToAction(nameof(HomeController.Index), "Home");

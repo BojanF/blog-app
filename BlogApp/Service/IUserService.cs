@@ -7,7 +7,14 @@ using BlogApp.Models;
 namespace BlogApp.Services {
     public interface IUserService {
 
-        int CountPostsFromUserForCategory(string userId,string CategoryName);
+        int CountApprovedPostsFromUserForCategory(string userId, long categoryId);
+
         List<Post> GetAllUnApprovedPostsForModerator(string UserId);
+
+        int countModeratorCategories(string userId);
+
+        List<string> AllNonAdminUsersId();
+
+        ApplicationUser getById(string userId);
     }
 }

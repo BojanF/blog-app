@@ -18,13 +18,28 @@ namespace BlogApp.Service.impl
              _repository = repository;
          }
          
-        public int CountPostsFromUserForCategory(string userId, string CategoryName) {
-            return _repository.CountPostsFromUserForCategory(userId, CategoryName);
+        public int CountApprovedPostsFromUserForCategory(string userId, long categoryId) {
+            return _repository.CountApprovedPostsFromUserForCategory(userId, categoryId);
         }
 
         public List<Post> GetAllUnApprovedPostsForModerator(string UserId)
         {
             return _repository.GetAllUnApprovedPostsForModerator(UserId);
+        }
+
+        public int countModeratorCategories(string userId)
+        {
+            return _repository.countModeratorCategories(userId);
+        }
+
+        public List<string> AllNonAdminUsersId()
+        {
+            return _repository.AllNonAdminUsersId();
+        }
+
+        public ApplicationUser getById(string userId)
+        {
+            return _repository.getById(userId);
         }
     }
 }

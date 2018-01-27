@@ -4,11 +4,9 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Are you sure you want to delete this post?</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Post</h4>
     <hr />
     <dl class="dl-horizontal">
         <input type="hidden" asp-for="ID" />
@@ -29,18 +27,19 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PostedText)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Likes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Likes)
-        </dd>
+        </dd>        
         <dt>
             @Html.DisplayNameFor(model => model.Approved)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Approved)
+        <dd>           
+            @if(Model.Approved)
+            {
+                <span class="label label-success">YES</span>
+            }
+            else
+            {
+                <span class="label label-danger">NO</span>
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.PostedAt)
@@ -52,14 +51,31 @@
             @Html.DisplayNameFor(model => model.Edited)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Edited)
+            @if (Model.Edited)
+            {
+                <span class="label label-success">YES</span>
+            }
+            else
+            {
+                <span class="label label-danger">NO</span>
+            }
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-4">
+                <a asp-action="Index" class="btn btn-primary btn-block">
+                    <i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i>
+                    Back to List
+                </a>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-danger btn-block">
+                    <i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>
+                    Delete
+                </button>
+            </div>
         </div>
     </form>
 </div>

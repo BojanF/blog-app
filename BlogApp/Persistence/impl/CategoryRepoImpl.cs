@@ -25,7 +25,7 @@ namespace BlogApp.Persistence.impl
 
         public Task<Category> GetById(long? id)
         {
-            return _context.Categories.SingleOrDefaultAsync(m => m.ID == id);
+            return _context.Categories.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
         }        
 
         public async Task<int> DeleteByIdAsync(long id)
@@ -52,6 +52,16 @@ namespace BlogApp.Persistence.impl
         {
             _context.Update(category);
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<Category> categoryForPost(long postId)
+        {
+            return _context.Posts.AsNoTracking().Where(post => post.ID == postId).Select(post => post.Category).Single();
+        }
+
+        public int CountPostsForCategory(long? categoryId)
+        {
+            return _context.Posts.Where(post => post.Category.ID == categoryId).Count();
         }
     }
 }

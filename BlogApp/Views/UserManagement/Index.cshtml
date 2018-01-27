@@ -11,7 +11,7 @@
     <table class="table">
         <thead>
             <tr>
-                <td><strong>Email</strong></td>
+                <td><strong>Username</strong></td>
                 <td><strong>Roles</strong></td>
                 <td><strong>Options</strong></td>
             </tr>
@@ -21,10 +21,13 @@
             {
 
                 <tr>
-                    <td>@user.Email</td>
+                    <td>@user.UserName</td>
                     <td>@(string.Join(",",await userManager.GetRolesAsync(user)))</td>
-                    <td><a asp-controller="UserManagement" asp-action="AddRole" asp-route-id="@user.Id">
-                        Add Role</a></td>
+                    <td><a asp-controller="UserManagement" 
+                           asp-action="AddRole" 
+                           asp-route-id="@user.Id"
+                           class="btn btn-xs btn-success">
+                        Make user Admin</a></td>
                 </tr>
 
             }
