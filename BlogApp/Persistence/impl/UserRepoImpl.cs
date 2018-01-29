@@ -1,4 +1,5 @@
-﻿using BlogApp.Models;
+﻿using BlogApp.Model;
+using BlogApp.Models;
 using BlogApp.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,7 +27,7 @@ namespace BlogApp.Persistence.impl
                 Count();          
         }
 
-        public List<Post> GetAllUnApprovedPostsForModerator(string UserId)
+        public IQueryable<Post> GetAllUnApprovedPostsForModerator(string UserId)
         {
 
             return _context.
@@ -36,8 +37,8 @@ namespace BlogApp.Persistence.impl
                 Where(post => post.UserId.Id != UserId).
                 Where(post => post.Category.UsersCategories.Any(c => c.CategoryId == post.CategoryId)).
                 Where(post => post.Category.UsersCategories.Any(c => c.UserId == UserId)).
-                Include(cat => cat.Category).
-                ToList();
+                Include(cat => cat.Category);
+                //ToList();
         }
 
         public  int countModeratorCategories(string userId)
@@ -61,6 +62,11 @@ namespace BlogApp.Persistence.impl
         public ApplicationUser getById(string userId)
         {
             return _context.Users.Where(user => user.Id == userId).Single();
+        }
+
+        public List<ApplicationUser> ModeratorForCategory(string userId, long categoryId)
+        {
+            return _context.Users.Where(user => user.UsersCategories.Any(uc => uc.UserId==userId && uc.CategoryId == categoryId)).ToList();
         }
     }
 }

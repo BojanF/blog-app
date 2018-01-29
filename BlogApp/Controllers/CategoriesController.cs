@@ -13,6 +13,8 @@ using BlogApp.Services;
 using BlogApp.Model;
 using Microsoft.AspNetCore.Identity;
 using BlogApp.ViewModels;
+using BlogApp.Special;
+using System.Data.SqlClient;
 
 namespace BlogApp.Controllers
 {
@@ -38,10 +40,16 @@ namespace BlogApp.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            //ViewData["Header"] = "BlogApp";
+            //return View(await _categoryService.GetAllCategories());
+
             ViewData["Header"] = "BlogApp";
-            return View(await _categoryService.GetAllCategories());
+            int pageSize = 5;
+            var categories = _categoryService.GetAllCategoriesQuaryable();
+            
+            return View(await PaginatedList<Category>.CreateAsync(categories, page ?? 1, pageSize));
         }
 
         // GET: Categories/Details/5
@@ -75,7 +83,7 @@ namespace BlogApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,CategoryName,LikesRule,PostRule")] Category category)
+        public async Task<IActionResult> Create([Bind("ID,CategoryName,PostRule")] Category category)
         {
             ViewData["Header"] = "BlogApp";
             if (ModelState.IsValid)
@@ -108,7 +116,7 @@ namespace BlogApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ID,CategoryName,LikesRule,PostRule")] Category category)
+        public async Task<IActionResult> Edit(long id, [Bind("ID,CategoryName,PostRule")] Category category)
         {
             ViewData["Header"] = "BlogApp";
             if (id != category.ID)
@@ -156,7 +164,6 @@ namespace BlogApp.Controllers
                             obj.CategoryId = category.ID;
                             obj.Category = category;
                             int deleteResult = await _userCategoryService.DeleteAsync(obj);
-                            int z = 0;
                             if (moderatorCategories == 0)
                             {
                                 var result = await _userManager.RemoveFromRoleAsync(user, "Moderator");
@@ -173,26 +180,32 @@ namespace BlogApp.Controllers
                     //a imaat dovolno approved postovi za da stanat Moderatori za dadenata kategorija
 
                     List<string> nonAdminUsers = _userService.AllNonAdminUsersId();
-
-                    foreach(string userId in nonAdminUsers)
+                    foreach (string userId in nonAdminUsers)
                     {
-                        int approvedPostsForCategory = _userService.CountApprovedPostsFromUserForCategory(userId, id);
 
-                        if(approvedPostsForCategory == category.PostRule)
+                        List<ApplicationUser> alreadyModeratorForCategory = _userService.ModeratorForCategory(userId, category.ID);
+                        if (alreadyModeratorForCategory.Count == 0)
                         {
-                            ApplicationUser newModerator = _userService.getById(userId);
-                            UserCategory obj = new UserCategory();
-                            obj.UserId = userId;
-                            obj.User = newModerator;
-                            obj.CategoryId = category.ID;
-                            obj.Category = category;
-                            await _userCategoryService.Insert(obj);
+                            int approvedPostsForCategory = _userService.CountApprovedPostsFromUserForCategory(userId, id);
 
-                            var userRoles = await _userManager.GetRolesAsync(newModerator);
-                            bool add = userRoles.Contains("Moderator");
-                            if (!add)
+                            if (approvedPostsForCategory >= category.PostRule)
                             {
-                                await _userManager.AddToRoleAsync(newModerator, "Moderator");
+
+                                ApplicationUser newModerator = _userService.getById(userId);
+                                UserCategory obj = new UserCategory();
+                                obj.UserId = userId;
+                                obj.User = newModerator;
+                                obj.CategoryId = category.ID;
+                                obj.Category = category;
+                                await _userCategoryService.Insert(obj);
+
+                                var userRoles = await _userManager.GetRolesAsync(newModerator);
+                                bool add = userRoles.Contains("Moderator");
+                                if (!add)
+                                {
+                                    await _userManager.AddToRoleAsync(newModerator, "Moderator");
+                                }
+                            
                             }
                         }
                     }

@@ -10,12 +10,14 @@ namespace BlogApp.Persistence
     {
         int CountApprovedPostsFromUserForCategory(string userId, long categoryId);
 
-        List<Post> GetAllUnApprovedPostsForModerator(string UserId);
+        IQueryable<Post> GetAllUnApprovedPostsForModerator(string UserId);
 
         int countModeratorCategories(string userID);
 
         List<string> AllNonAdminUsersId();
 
         ApplicationUser getById(string userId);
+
+        List<ApplicationUser> ModeratorForCategory(string userId, long categoryId);
     }
 }

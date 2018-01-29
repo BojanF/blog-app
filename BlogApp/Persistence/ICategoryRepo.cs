@@ -10,6 +10,8 @@ namespace BlogApp.Persistence
     {
         Task<List<Category>> GetAllCategories();
 
+        IQueryable<Category> GetAllCategoriesQuaryable();
+
         Task<Category> GetById(long? id);
 
         Task<int> DeleteByIdAsync(long id);

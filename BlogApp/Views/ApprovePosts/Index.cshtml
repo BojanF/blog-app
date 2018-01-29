@@ -1,9 +1,11 @@
 @using BlogApp.Models;
-@model BlogApp.ViewModels.ApprovePostsIndexViewModel
+<!--model BlogApp.ViewModels.ApprovePostsIndexViewModel-->
+@model BlogApp.Special.PaginatedList<BlogApp.Models.Post>
 
 @{
     ViewData["Title"] = "Approving Posts";
-    var postsSize = Model.Posts.Count;
+    //var postsSize = Model.Posts.Count;
+    var postsSize = Model.Count();
 }
 <div class="container-fluid">
     @if (postsSize != 0)
@@ -19,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var post in Model.Posts)
+                @foreach (var post in Model)
                 {
 
                     <tr>
@@ -35,11 +37,34 @@
                     </tr>
 
                 }
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
             </tbody>
         </table>
-
-    }
-    else { 
+        <!-- Pager -->
+        <ul class="pager">
+            <li class="previous">
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageIndex - 1)"
+                   class="btn btn-default @prevDisabled">
+                    &larr;
+                    Previous
+                </a>
+            </li>             
+            <li class="next">
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageIndex + 1)"
+                   class="btn btn-default @nextDisabled">
+                    Next
+                    &rarr;
+                </a>
+            </li>            
+         </ul>
+     }
+     else
+     {
         <div class="row">
             <div class="panel panel-info">
                 <div class="panel-heading text-center text-info">All posts are approved!</div>

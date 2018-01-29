@@ -16,16 +16,16 @@
             <form asp-action="Create">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    
-                <div class="row control-group">
-                    <div class="form-group col-xs-12 floating-label-form-group controls">
-                        <label asp-for="CategoryName" class="control-label"></label>
-                        <input asp-for="CategoryName" type="text" class="form-control" placeholder="Category name">
-                        <span asp-validation-for="CategoryName" class="text-danger"></span>
-                    </div>
-                </div>
-                    
                 <div class="row">
+                    <div class="control-group">
+                        <div class="form-group col-xs-12 col-md-6 floating-label-form-group controls">
+                            <label asp-for="CategoryName" class="control-label"></label>
+                            <input asp-for="CategoryName" type="text" class="form-control" placeholder="Category name">
+                            <span asp-validation-for="CategoryName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
                     <div class="control-group">
                         <div class="form-group col-xs-12 col-md-6 floating-label-form-group controls">
                             <label asp-for="PostRule" class="control-label"></label>
@@ -33,20 +33,13 @@
                             <span asp-validation-for="PostRule" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <div class="form-group col-xs-12 col-md-6 floating-label-form-group controls">
-                          <label asp-for="LikesRule" class="control-label"></label>
-                          <input asp-for="LikesRule" type="number" min="1" class="form-control" placeholder="Likes rule">
-                          <span asp-validation-for="LikesRule" class="text-danger"></span>
-                        </div>
-                    </div>
                 </div>
                 <br />
                 <div class="row">
-                    <div class="form-group col-xs-12">
-                        <button type="submit" value="Create" class="btn btn-success">
+                    <div class="form-group">
+                        <button type="submit" value="Create" class="btn btn-success col-md-offset-2 col-md-8">
                             <i class="fa fa-fw fa-save"></i>
-                            Save
+                            Save category
                         </button>
                     </div>
                 </div>                

@@ -16,12 +16,12 @@ namespace BlogApp.Service.impl
             _repository = repository;
         }
 
-        public List<ApplicationUser> GetAllUsers()
+        public IQueryable<ApplicationUser> GetAllUsers()
         {
             return _repository.GetAllUsers();
         }
 
-        public List<Post> GetAllUnApprovedPostsForAdmin(string UserId) {
+        public IQueryable<Post> GetAllUnApprovedPostsForAdmin(string UserId) {
             return _repository.GetAllUnApprovedPostsForAdmin(UserId);
         }
     }

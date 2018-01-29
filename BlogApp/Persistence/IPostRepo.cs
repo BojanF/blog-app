@@ -11,7 +11,7 @@ namespace BlogApp.Persistence
     {
         Task<List<Post>> GetAllPosts();
 
-        List<Post> GetAllPostsForUser(string userId);
+        IQueryable<Post> GetAllPostsForUser(string userId);
 
         Task<Post> GetById(long? id);
 

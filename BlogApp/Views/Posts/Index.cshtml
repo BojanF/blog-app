@@ -1,4 +1,5 @@
-@model IEnumerable<BlogApp.Models.Post>
+<!--model IEnumerable<BlogApp.Models.Post>-->
+@model BlogApp.Special.PaginatedList<BlogApp.Models.Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +14,19 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Headline)
+                               Headline
                             </th>
                             <th>
                                 Category
                             </th>                            
                             <th>
-                                @Html.DisplayNameFor(model => model.Approved)
+                                Approved
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.PostedAt)
+                                Posted at
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Edited)
+                                Edited
                             </th>
                             <th></th>
                         </tr>
@@ -74,10 +75,33 @@
                                         <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                                      </a>
                                 </td>
-                            </tr>
-                        }
+                            </tr>                            
+                         }
+                         @{
+                            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                         }
                     </tbody>
                 </table>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="previous">
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           class="btn btn-default @prevDisabled">
+                            &larr;
+                            Previous
+                        </a>
+                    </li>
+                    <li class="next">
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           class="btn btn-default @nextDisabled">
+                            Next
+                            &rarr;
+                        </a>
+                    </li>
+                </ul>
             }
             else
             {

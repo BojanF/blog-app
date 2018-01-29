@@ -21,6 +21,11 @@ namespace BlogApp.Service.impl
             return _repository.GetAllCategories();
         }
 
+        public IQueryable<Category> GetAllCategoriesQuaryable()
+        {
+            return _repository.GetAllCategoriesQuaryable();
+        }
+
         public Task<Category> getById(long? id)
         {
             return _repository.GetById(id);

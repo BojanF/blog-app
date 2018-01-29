@@ -15,7 +15,6 @@ namespace BlogApp.Models {
         public long ID { get; set; }
         [Required]
         public String CategoryName { get; set; }
-        public int LikesRule { get; set; }
         public int PostRule { get; set; }
 
 

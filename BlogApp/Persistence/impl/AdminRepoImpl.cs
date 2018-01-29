@@ -17,13 +17,13 @@ namespace BlogApp.Persistence.impl
             _context = context;
         }
 
-        public List<ApplicationUser> GetAllUsers()
+        public IQueryable<ApplicationUser> GetAllUsers()
         {
-            return _context.Users.OrderBy(u => u.Email).Include(r => r.Roles).ToList();//Include is Eager Loading not Lazy load
+            return _context.Users.OrderBy(u => u.Email).Include(r => r.Roles);//Include is Eager Loading not Lazy load
         }
 
-        public List<Post> GetAllUnApprovedPostsForAdmin(string UserId) {
-            return _context.Posts.OrderBy(pt => pt.PostedAt).Where(p => !p.Approved).Where(p => p.UserId.Id != UserId).Include(cat => cat.Category).ToList();
+        public IQueryable<Post> GetAllUnApprovedPostsForAdmin(string UserId){        
+            return _context.Posts.OrderBy(pt => pt.PostedAt).Where(p => !p.Approved).Where(p => p.UserId.Id != UserId).Include(cat => cat.Category);
         }
     }
 }

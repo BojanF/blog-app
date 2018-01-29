@@ -22,7 +22,7 @@ namespace BlogApp.Service.impl
             return _repository.CountApprovedPostsFromUserForCategory(userId, categoryId);
         }
 
-        public List<Post> GetAllUnApprovedPostsForModerator(string UserId)
+        public IQueryable<Post> GetAllUnApprovedPostsForModerator(string UserId)
         {
             return _repository.GetAllUnApprovedPostsForModerator(UserId);
         }
@@ -40,6 +40,11 @@ namespace BlogApp.Service.impl
         public ApplicationUser getById(string userId)
         {
             return _repository.getById(userId);
+        }
+
+        public List<ApplicationUser> ModeratorForCategory(string userId, long categoryId)
+        {
+            return _repository.ModeratorForCategory(userId, categoryId);
         }
     }
 }

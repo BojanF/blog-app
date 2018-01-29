@@ -9,12 +9,14 @@ namespace BlogApp.Services {
 
         int CountApprovedPostsFromUserForCategory(string userId, long categoryId);
 
-        List<Post> GetAllUnApprovedPostsForModerator(string UserId);
+        IQueryable<Post> GetAllUnApprovedPostsForModerator(string UserId);
 
         int countModeratorCategories(string userId);
 
         List<string> AllNonAdminUsersId();
 
         ApplicationUser getById(string userId);
+
+        List<ApplicationUser> ModeratorForCategory(string userId, long categoryId);
     }
 }

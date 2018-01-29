@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp.Special
@@ -40,6 +41,6 @@ namespace BlogApp.Special
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
-        }
+        }       
     }
 }

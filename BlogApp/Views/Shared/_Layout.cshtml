@@ -45,7 +45,7 @@
                        @if (User.IsInRole("Admin"))
                        {
                         <li>
-                            <a asp-area="" asp-controller="Posts" asp-action="Create">New post</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Create"> <i class="fa fa-plus"></i> New post</a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts</a>
@@ -57,7 +57,7 @@
                                     <a asp-area="" asp-controller="Categories" asp-action="Index">All categories</a>
                                 </li>
                                 <li>
-                                    <a asp-area="" asp-controller="Categories" asp-action="Create">Add new</a>
+                                    <a asp-area="" asp-controller="Categories" asp-action="Create"> <i class="fa fa-plus"></i> Add new</a>
                                 </li>
                             </ul>
                         </li>
@@ -82,10 +82,10 @@
                        else if (User.IsInRole("Moderator"))
                        {
                         <li>
-                            <a asp-area="" asp-controller="Posts" asp-action="Create">New post</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Create"> <i class="fa fa-plus"></i> New post</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> All Post</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts </a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Home" asp-action="About">About</a>
@@ -105,10 +105,10 @@
                        else
                        {
                         <li>
-                            <a asp-area="" asp-controller="Posts" asp-action="Create">New post</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Create"> <i class="fa fa-plus"></i> New post</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> All Post</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts</a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Home" asp-action="About">About</a>

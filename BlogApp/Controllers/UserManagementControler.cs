@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BlogApp.Special;
 
 namespace BlogApp.Controllers
 {
@@ -35,14 +36,19 @@ namespace BlogApp.Controllers
 
         // GET: /<controller>/
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            
-            var vm = new UserManagementIndexViewModel {
+
+            /*var vm = new UserManagementIndexViewModel {
                 Users = _adminService.GetAllUsers()
             };
-            
-            return View(vm);
+            return View(vm);*/
+            int pageSize = 7;
+            var users = _adminService.GetAllUsers();
+
+            return View(await PaginatedList<ApplicationUser>.CreateAsync(users, page ?? 1, pageSize));
+
+           
         }
 
 

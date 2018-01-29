@@ -10,6 +10,8 @@ namespace BlogApp.Service
     {
         Task<List<Category>> GetAllCategories();
 
+        IQueryable<Category> GetAllCategoriesQuaryable();
+
         Task<Category> getById(long? id);
 
         Task<int> DeleteByIdAsync(long id);

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using BlogApp.Services;
 using BlogApp.Model;
+using BlogApp.Special;
 
 namespace BlogApp.Controllers
 {
@@ -43,12 +44,12 @@ namespace BlogApp.Controllers
 
         // GET :Index
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             ViewData["Header"] = "Approving Posts";
             var user = await GetCurrentUserAsync();
             string userId = user?.Id;
-            List<Post> unapprovedPosts;
+            IQueryable<Post> unapprovedPosts;
             var userRoles = await _userManager.GetRolesAsync(user);
             if (userRoles.Contains("Admin"))
             {
@@ -58,13 +59,9 @@ namespace BlogApp.Controllers
             {
                 unapprovedPosts = _userService.GetAllUnApprovedPostsForModerator(userId);
             }
-
-            var vm = new ApprovePostsIndexViewModel()
-            {                
-                Posts = unapprovedPosts
-            };
-
-            return View(vm);
+          
+            int pageSize = 10;
+            return View(await PaginatedList<Post>.CreateAsync(unapprovedPosts, page ?? 1, pageSize));
         }
 
         [HttpGet]

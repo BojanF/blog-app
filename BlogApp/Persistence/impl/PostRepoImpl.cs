@@ -31,8 +31,8 @@ namespace BlogApp.Persistence.impl
             return _context.Posts.ToListAsync();
         }
 
-        public List<Post> GetAllPostsForUser(string userId) {
-            return _context.Posts.Where(pu => pu.UserId.Id == userId).Include(p => p.Category).ToList();
+        public IQueryable<Post> GetAllPostsForUser(string userId) {
+            return _context.Posts.Where(pu => pu.UserId.Id == userId).Include(p => p.Category);
         }
 
         public Task<Post> GetById(long? id)

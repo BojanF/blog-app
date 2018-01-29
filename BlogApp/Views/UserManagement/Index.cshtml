@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using BlogApp.Models;
-@model BlogApp.ViewModels.UserManagementIndexViewModel
+<!--model BlogApp.ViewModels.UserManagementIndexViewModel-->
+@model BlogApp.Special.PaginatedList<BlogApp.Models.ApplicationUser>
 @inject UserManager<ApplicationUser> userManager
 @{
     ViewData["Title"] = "User Managment Page";
@@ -17,9 +18,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model.Users)
+            @foreach (var user in Model)
             {
-
                 <tr>
                     <td>@user.UserName</td>
                     <td>@(string.Join(",",await userManager.GetRolesAsync(user)))</td>
@@ -31,6 +31,29 @@
                 </tr>
 
             }
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
         </tbody>
     </table>
+    <!-- Pager -->
+    <ul class="pager">
+        <li class="previous">
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex - 1)"
+               class="btn btn-default @prevDisabled">
+                &larr;
+                Previous
+            </a>
+        </li>
+        <li class="next">
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex + 1)"
+               class="btn btn-default @nextDisabled">
+                Next
+                &rarr;
+            </a>
+        </li>
+    </ul>
 </div>

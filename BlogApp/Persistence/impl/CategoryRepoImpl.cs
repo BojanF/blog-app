@@ -23,6 +23,11 @@ namespace BlogApp.Persistence.impl
             return _context.Categories.ToListAsync();
         }
 
+        public IQueryable<Category> GetAllCategoriesQuaryable()
+        {
+            return _context.Categories;
+        }
+
         public Task<Category> GetById(long? id)
         {
             return _context.Categories.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);

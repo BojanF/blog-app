@@ -8,9 +8,10 @@ using BlogApp.Models.Data;
 namespace BlogApp.Migrations
 {
     [DbContext(typeof(BlogAppContext))]
-    partial class BlogAppContextModelSnapshot : ModelSnapshot
+    [Migration("20180127191514_NoLikeRuleCategory")]
+    partial class NoLikeRuleCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.4");

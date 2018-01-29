@@ -10,10 +10,10 @@ namespace BlogApp.Service {
     public interface IAdminService {
 
         //Notification DisapprovePost(long PostId, long AdminId, long UserId, string Text);
-        
-        List<Post> GetAllUnApprovedPostsForAdmin(string UserId);
 
-        List<ApplicationUser> GetAllUsers();
+        IQueryable<Post> GetAllUnApprovedPostsForAdmin(string UserId);
+
+        IQueryable<ApplicationUser> GetAllUsers();
 
     }
 }

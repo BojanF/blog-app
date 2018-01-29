@@ -48,12 +48,14 @@ namespace BlogApp.Controllers
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {            
             ViewData["Header"] = "Your posts";
             var user = await GetCurrentUserAsync();
-            string userId = user?.Id;            
-            return View(_postService.GetAllPostsForUser(userId));
+            string userId = user?.Id;
+            var userPosts = _postService.GetAllPostsForUser(userId);
+            int pageSize = 10;
+            return View(await PaginatedList<Post>.CreateAsync(userPosts, page ?? 1, pageSize));
         }
 
 
@@ -65,7 +67,7 @@ namespace BlogApp.Controllers
             ViewData["PostHeadline"] = post.Result.Headline;
             ViewData["PostID"] = id;
             var comments = _postService.CommentsForPost(id);
-            int pageSize = 2;
+            int pageSize = 5;
             return View(await PaginatedList<Comment>.CreateAsync(comments, page ?? 1, pageSize));
         }
 
@@ -156,13 +158,8 @@ namespace BlogApp.Controllers
             }
 
             await _postService.Insert(newPostViewModel.post);
-            return RedirectToAction("Index", "Home");
-            
-            /*else
-            {
-                return NotFound();
-            }*/
-           // return View(post);
+            return RedirectToAction("Index", "Home");            
+           
         }
 
         // GET: Posts/Edit/5
@@ -326,7 +323,6 @@ namespace BlogApp.Controllers
                     obj.CategoryId = category.ID;
                     obj.Category = category;
                     int deleteResult = await _userCategoryService.DeleteAsync(obj);
-                    int z = 0;
                     if (moderatorCategories == 0)
                     {
                         var result = await _userManager.RemoveFromRoleAsync(user, "Moderator");
