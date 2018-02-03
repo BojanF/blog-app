@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlogApp.Service;
 using BlogApp.Special;
 using BlogApp.Models;
-using BlogApp.Models.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using BlogApp.ViewModels;
+using Newtonsoft.Json;
 
 namespace BlogApp.Controllers
 {
@@ -17,16 +16,21 @@ namespace BlogApp.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private IHomePageService service;
-        
+        private IHomePageService HomePageService;
+        private readonly ICategoryService categoryService;
 
-        public HomeController(IHomePageService service, UserManager<ApplicationUser> userManager)
+        public HomeController(IHomePageService homePageService, 
+            UserManager<ApplicationUser> userManager,
+            ICategoryService categoryService
+            )
         {
             _userManager = userManager;
-            this.service = service;
+            this.HomePageService = homePageService;
+            this.categoryService = categoryService;
         }
 
         // GET: Index
+        [HttpGet]
         public async Task<IActionResult> Index(int criteria, int? page)
         {
 
@@ -35,7 +39,7 @@ namespace BlogApp.Controllers
                             (HttpContext.User).Result;
 
             ViewBag.Message = $"Welcome {user.UserName}!";
-            var posts = service.GetAllPosts();
+            var posts = HomePageService.GetAllPosts();
 
             //switch by criteria
             switch (criteria)
@@ -59,26 +63,39 @@ namespace BlogApp.Controllers
             return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
         }
 
+        [HttpGet]
         public IActionResult AccessGraanted() {
             return View();
             
         }
-
+        [HttpGet]
         public IActionResult About()
         {
             ViewData["Header"] = "About us";
-            ViewData["Message"] = "BOJAN";
 
+            List<Category> categoryList = categoryService.GetAllCategories().Result;
+            List<CategoryExtendedViewModel> statisticList = new List<CategoryExtendedViewModel>();
+            for (int i=0;i<categoryList.Count;i++) {
+                int countedPosts = categoryService.CountPostsForCategory(categoryList[i].ID);
+                CategoryExtendedViewModel catItem = new CategoryExtendedViewModel(categoryList[i].CategoryName, countedPosts);
+                statisticList.Add(catItem);
+            }
+            string json = JsonConvert.SerializeObject(statisticList);
+            
+            ViewData["statisticList"] = json;
+            
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
+            
             return View();
         }
 
+        [HttpGet]
         public IActionResult Error()
         {
             return View();

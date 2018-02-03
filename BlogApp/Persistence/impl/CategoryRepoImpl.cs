@@ -61,7 +61,7 @@ namespace BlogApp.Persistence.impl
 
         public async Task<Category> categoryForPost(long postId)
         {
-            return _context.Posts.AsNoTracking().Where(post => post.ID == postId).Select(post => post.Category).Single();
+            return  _context.Posts.AsNoTracking().Where(post => post.ID == postId).Select(post => post.Category).Single();
         }
 
         public int CountPostsForCategory(long? categoryId)

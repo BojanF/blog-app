@@ -88,6 +88,8 @@ namespace BlogApp.Controllers
         {
             Post post = await _postService.GetById(id);
             post.Approved = true;
+            post.approvedByUser = await GetCurrentUserAsync();
+            post.approvedByUserId = post.approvedByUser.Id;
             try
             {
                 await _postService.Update(post);

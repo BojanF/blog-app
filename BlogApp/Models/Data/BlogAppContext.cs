@@ -51,6 +51,10 @@ namespace BlogApp.Models.Data
                 .WithMany(c => c.UsersCategories)
                 .HasForeignKey(uc => uc.CategoryId);
 
+            modelBuilder.Entity<Post>()
+                .HasOne(aprusr => aprusr.approvedByUser)
+                .WithMany(p => p.ApprovedPostsByUser)
+                .HasForeignKey(ap => ap.approvedByUserId);
 //------/Fluent API --------------------------------------------------------------------/
         }
 

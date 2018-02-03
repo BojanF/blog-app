@@ -155,6 +155,8 @@ namespace BlogApp.Controllers
                 ApplicationUser userId = await _userManager.GetUserAsync(User);
                 newPostViewModel.post.UserId = userId;
                 newPostViewModel.post.CategoryId = SelectedValue;
+                newPostViewModel.post.approvedByUser = null;
+                newPostViewModel.post.approvedByUserId = null;
             }
 
             await _postService.Insert(newPostViewModel.post);

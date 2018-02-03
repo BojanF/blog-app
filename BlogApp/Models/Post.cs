@@ -39,10 +39,9 @@ namespace BlogApp.Models {
         [Required, ForeignKey("CategoryId")]
         public long CategoryId { get; set; }
         public Category Category{ get; set; }
-
-
-        /*public string approvedByUserId { get; set; }
-        public ApplicationUser approvedByUser { get; set; }*/
+        
+        public string approvedByUserId { get; set; }
+        public ApplicationUser approvedByUser { get; set; }
 
         public String PostedAtToString()
         {

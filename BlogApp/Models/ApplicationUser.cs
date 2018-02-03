@@ -12,7 +12,7 @@ namespace BlogApp.Models
         //noting here coz its already implemented
         public ICollection<Comment> Comments { get; set; }//one user has many comments(1 to many)
         public ICollection<Post> Posts { get; set; } //one user has many posts(1 to many)
-        //public ICollection<Post> ApprovedPostsByUser { get; set; } //one user has approved many posts from other users(1 to many)
+        public ICollection<Post> ApprovedPostsByUser { get; set; } //one user has approved many posts from other users(1 to many)
         public ICollection<Notification> Notifications { get; set; } //(1 to many) 
         public ICollection<UserCategory> UsersCategories { set; get; } //(many to many)
     }

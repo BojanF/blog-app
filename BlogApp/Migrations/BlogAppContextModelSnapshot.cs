@@ -169,11 +169,15 @@ namespace BlogApp.Migrations
                     b.Property<string>("UserName")
                         .IsRequired();
 
+                    b.Property<string>("approvedByUserId");
+
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("UserIdId");
+
+                    b.HasIndex("approvedByUserId");
 
                     b.ToTable("Posts");
                 });
@@ -330,6 +334,10 @@ namespace BlogApp.Migrations
                         .WithMany("Posts")
                         .HasForeignKey("UserIdId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlogApp.Models.ApplicationUser", "approvedByUser")
+                        .WithMany("ApprovedPostsByUser")
+                        .HasForeignKey("approvedByUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
