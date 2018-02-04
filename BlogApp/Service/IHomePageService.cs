@@ -10,5 +10,7 @@ namespace BlogApp.Service
     public interface IHomePageService
     {
         IQueryable<Post> GetAllPosts();
+
+        IQueryable<Post> ApprovedPostsForCategory(long? categoryId);
     }
 }

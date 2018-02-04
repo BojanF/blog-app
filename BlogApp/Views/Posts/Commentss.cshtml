@@ -14,7 +14,12 @@
                     @if (counter < 2)
                     {
                         <div class="FewComments">
-                            <h3>@CommentsList.Users.UserName <small>on @CommentsList.CommentedAt</small></h3>
+                            <h3>
+                                <a asp-controller="User" asp-action="Details" asp-route-userId="@CommentsList.Users.Id">
+                                    @CommentsList.Users.UserName
+                                </a>
+                                <small>on @CommentsList.CommentedAt</small>
+                            </h3>
                             <p>
                                 @CommentsList.CommentText
                             </p>
@@ -26,7 +31,12 @@
                     {
                         counter = counter + 1;
                         <div class="AllComments">
-                            <h3>@CommentsList.Users.UserName <small>on @CommentsList.CommentedAt</small></h3>
+                            <h3>
+                                <a asp-controller="User" asp-action="Details" asp-route-userId="@CommentsList.Users.Id">
+                                    @CommentsList.Users.UserName
+                                </a>                                
+                                <small>on @CommentsList.CommentedAt</small>
+                            </h3>
                             <p>
                                 @CommentsList.CommentText
                             </p>

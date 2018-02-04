@@ -16,8 +16,8 @@ namespace BlogApp.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private IHomePageService HomePageService;
-        private readonly ICategoryService categoryService;
+        private IHomePageService _homePageService;
+        private readonly ICategoryService _categoryService;
 
         public HomeController(IHomePageService homePageService, 
             UserManager<ApplicationUser> userManager,
@@ -25,8 +25,8 @@ namespace BlogApp.Controllers
             )
         {
             _userManager = userManager;
-            this.HomePageService = homePageService;
-            this.categoryService = categoryService;
+            _homePageService = homePageService;
+            _categoryService = categoryService;
         }
 
         // GET: Index
@@ -35,11 +35,10 @@ namespace BlogApp.Controllers
         {
 
             ViewData["Header"] = "BlogApp";
-            ApplicationUser user = _userManager.GetUserAsync
-                            (HttpContext.User).Result;
+            ApplicationUser user = _userManager.GetUserAsync(HttpContext.User).Result;
 
             ViewBag.Message = $"Welcome {user.UserName}!";
-            var posts = HomePageService.GetAllPosts();
+            var posts = _homePageService.GetAllPosts();
 
             //switch by criteria
             switch (criteria)
@@ -58,7 +57,7 @@ namespace BlogApp.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             ViewBag.SortingCriteria = criteria;
             return View(await PaginatedList<Post>.CreateAsync(posts, page ?? 1, pageSize));
         }
@@ -68,15 +67,16 @@ namespace BlogApp.Controllers
             return View();
             
         }
+
         [HttpGet]
         public IActionResult About()
         {
             ViewData["Header"] = "About us";
 
-            List<Category> categoryList = categoryService.GetAllCategories().Result;
+            List<Category> categoryList = _categoryService.GetAllCategories().Result;
             List<CategoryExtendedViewModel> statisticList = new List<CategoryExtendedViewModel>();
             for (int i=0;i<categoryList.Count;i++) {
-                int countedPosts = categoryService.CountPostsForCategory(categoryList[i].ID);
+                int countedPosts = _categoryService.CountPostsForCategory(categoryList[i].ID);
                 CategoryExtendedViewModel catItem = new CategoryExtendedViewModel(categoryList[i].CategoryName, countedPosts);
                 statisticList.Add(catItem);
             }
@@ -99,6 +99,18 @@ namespace BlogApp.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CategoryPosts(long? categoryId, int? page)
+        {
+            var postsForCategory = _homePageService.ApprovedPostsForCategory(categoryId);    
+            int pageSize = 5;
+            var category = _categoryService.getById(categoryId).Result.CategoryName;
+            ViewData["Title"] = category;
+            ViewData["Header"] = category;
+            ViewData["CategoryId"] = categoryId;
+            return View(await PaginatedList<Post>.CreateAsync(postsForCategory, page ?? 1, pageSize));
         }
     }
 }

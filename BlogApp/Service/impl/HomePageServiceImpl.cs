@@ -10,16 +10,21 @@ namespace BlogApp.Service
 {
     public class HomePageServiceImpl : IHomePageService
     {
-        private IHomePageRepo repository;
+        private IHomePageRepo _repository;
 
         public HomePageServiceImpl(IHomePageRepo repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public IQueryable<Post> GetAllPosts()
         {
-            return repository.GetAllPosts();
+            return _repository.GetAllPosts();
+        }
+
+        public IQueryable<Post> ApprovedPostsForCategory(long? categoryId)
+        {
+            return _repository.ApprovedPostsForCategory(categoryId);
         }
     }
 }

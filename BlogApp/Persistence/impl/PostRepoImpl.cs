@@ -32,7 +32,11 @@ namespace BlogApp.Persistence.impl
         }
 
         public IQueryable<Post> GetAllPostsForUser(string userId) {
-            return _context.Posts.Where(pu => pu.UserId.Id == userId).Include(p => p.Category);
+            return _context
+                .Posts
+                .OrderByDescending(post => post.PostedAt)
+                .Where(pu => pu.UserId.Id == userId)
+                .Include(p => p.Category);
         }
 
         public Task<Post> GetById(long? id)
@@ -42,8 +46,8 @@ namespace BlogApp.Persistence.impl
 
         public Task<Post> GetByIdDetailded(long? id)
         {
-            // return _context.Posts.Include(p => p.UserName).Include(p=> p.PostsCategories).ThenInclude(p => p.Category).SingleOrDefaultAsync(p => p.ID == id && p.Approved);
-            return _context.Posts.SingleOrDefaultAsync(p => p.ID == id);
+            return _context.Posts.Include(post => post.UserId).SingleOrDefaultAsync(m => m.ID == id);
+            //return _context.Posts.SingleOrDefaultAsync(p => p.ID == id);
         
         }
 

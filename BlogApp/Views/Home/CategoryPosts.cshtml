@@ -1,0 +1,73 @@
+﻿
+@model BlogApp.Special.PaginatedList<BlogApp.Models.Post>
+@{ 
+    var categoryId = ViewData["CategoryId"];
+}
+
+<div class="container">
+    <div class="row">
+        @if (Model.Count != 0)
+        {
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                @foreach (var PostsList in Model)
+                {
+                    <div class="post-preview">
+                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@PostsList.ID">
+                            <h2 class="post-title">
+                                @PostsList.Headline
+                            </h2>
+                        </a>
+
+                        <blockquote>
+                            @PostsList.Caption
+                        </blockquote>
+
+                        <p class="post-meta">
+                            Posted by 
+                            <a asp-controller="User" asp-action="Details" asp-route-userId="@PostsList.UserId.Id">
+                                @PostsList.UserName
+                            </a> on @PostsList.PostedAt.ToString()
+                        </p>
+
+                    </div>
+                    <hr>
+                }
+
+                <!-- Pager -->
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
+                <ul class="pager">
+                    <li class="previous">
+                        <a asp-action="CategoryPosts"
+                           asp-route-categoryId="@(categoryId)"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           class="btn btn-default @prevDisabled">
+                            &larr;
+                            Previous
+                        </a>
+                    </li>
+                    <li class="next">
+                        <a asp-action="CategoryPosts"
+                           asp-route-categoryId="@(categoryId)"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           class="btn btn-default @nextDisabled">
+                            Next
+                            &rarr;
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center text-info">There are no approved posts for this category!</div>
+                </div>
+            </div>
+        }         
+    </div>
+
+</div>

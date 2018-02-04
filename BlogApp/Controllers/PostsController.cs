@@ -96,6 +96,7 @@ namespace BlogApp.Controllers
             ViewData["Count"] = commentsForPost.Count();
             vm.Post.Comments = commentsForPost.ToList();
             ViewData["Posted"] = " on " + post.PostedAt.ToString();
+            ViewData["UserId"] = post.UserId.Id;
 
             return View(vm);
         }
@@ -203,7 +204,8 @@ namespace BlogApp.Controllers
             post.Approved = false;
             post.Edited = true;
             post.PostedAt = _postService.getPostedAtForPost(id);
-
+            post.approvedByUser = null;
+            post.approvedByUserId = null;
             try
             {
                 await _postService.Update(post);

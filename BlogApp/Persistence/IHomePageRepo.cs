@@ -10,5 +10,7 @@ namespace BlogApp.Persistence
     public interface IHomePageRepo
     {
         IQueryable<Post> GetAllPosts();
+
+        IQueryable<Post> ApprovedPostsForCategory(long? categoryId);
     }
 }

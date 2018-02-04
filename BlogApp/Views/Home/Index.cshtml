@@ -51,22 +51,26 @@
                         </h2>
                     </a>
 
-                    <a href="#"> | @PostsList.Category.CategoryName |</a>
+                    <a asp-controller="Home" asp-action="CategoryPosts" asp-route-categoryId="@PostsList.Category.ID">
+                        @PostsList.Category.CategoryName 
+                    </a>
 
                     <blockquote>
                         @PostsList.Caption
                     </blockquote>
 
-                    <p class="post-meta">Posted by <strong href="#">@PostsList.UserName</strong> on @PostsList.PostedAt.ToString()</p>
+                    <p class="post-meta">
+                        Posted by 
+                        <a asp-controller="User" asp-action="Details" asp-route-userId="@PostsList.UserId.Id">
+                            @PostsList.UserName
+                        </a> on @PostsList.PostedAt.ToString()
+                    </p>
 
                 </div>
                 <hr>
             }
 
             <!-- Pager -->
-
-
-
             @{
                 var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
                 var nextDisabled = !Model.HasNextPage ? "disabled" : "";

@@ -32,17 +32,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var post in Model)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Headline)
+                                    @Html.DisplayFor(modelItem => post.Headline)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                    <a asp-controller="Home" asp-action="CategoryPosts" asp-route-categoryId="@post.Category.ID">
+                                        @Html.DisplayFor(modelItem => post.Category.CategoryName)
+                                    </a>
+                                    
                                 </td>                                
                                 <td>                                                                   
-                                    @if (item.Approved)
+                                    @if (post.Approved)
                                     {
                                         <span class="label label-success">YES</span>
                                     }
@@ -52,10 +55,10 @@
                                     }
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.PostedAt)
+                                    @Html.DisplayFor(modelItem => post.PostedAt)
                                 </td>
                                 <td>
-                                    @if (item.Edited)
+                                    @if (post.Edited)
                                     {
                                         <span class="label label-success">YES</span>
 
@@ -65,13 +68,13 @@
                                     }
                                 </td>
                                 <td>
-                                    <a class="btn btn-xs btn-success" asp-action="Edit" asp-route-id="@item.ID">
+                                    <a class="btn btn-xs btn-success" asp-action="Edit" asp-route-id="@post.ID">
                                         <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                                     </a> 
-                                    <a class="btn btn-xs btn-default" asp-action="Details" asp-route-id="@item.ID">
+                                    <a class="btn btn-xs btn-default" asp-action="Details" asp-route-id="@post.ID">
                                         <i class="fa fa-info" aria-hidden="true"></i> Details
                                     </a> 
-                                    <a class="btn btn-xs btn-danger" asp-action="Delete" asp-route-id="@item.ID">
+                                    <a class="btn btn-xs btn-danger" asp-action="Delete" asp-route-id="@post.ID">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                                      </a>
                                 </td>

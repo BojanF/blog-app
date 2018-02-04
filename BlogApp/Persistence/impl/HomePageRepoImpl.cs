@@ -11,22 +11,30 @@ namespace BlogApp.Persistence.impl
 {
     public class HomePageRepoImpl : IHomePageRepo
     {
-        private BlogAppContext context;
+        private BlogAppContext _context;
 
         public HomePageRepoImpl(BlogAppContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public IQueryable<Post> GetAllPosts()
+        {           
+            return _context
+                .Posts
+                .OrderByDescending(post => post.PostedAt)
+                .Where(post => post.Approved)
+                .Include(post => post.Category)
+                .Include(post => post.UserId);
+        }
+
+        public IQueryable<Post> ApprovedPostsForCategory(long? categoryId)
         {
-            /*var result = from post in context.Posts
-                         join category in context.Categories on post.CategoryId equals category.ID
-                         select post;*/
-            // var rez = context.Posts.Where(p => p.Approved).Include(p => p.UserName).Include(p => p.PostsCategories).ThenInclude(m => m.Category);
-            var rez = context.Posts.Where(p => p.Approved).Include(p => p.Category);
-          
-            return rez;
+            return _context
+                .Posts
+                .OrderByDescending(post => post.PostedAt)
+                .Include(post => post.UserId)
+                .Where(post => post.Approved && post.CategoryId == categoryId);
         }
     }
 }

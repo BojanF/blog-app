@@ -46,5 +46,26 @@ namespace BlogApp.Service.impl
         {
             return _repository.ModeratorForCategory(userId, categoryId);
         }
+
+        public int CountApprovedPostByUser(string userId)
+        {
+            return _repository.CountApprovedPostByUser(userId);
+        }
+
+        public IQueryable<Post> GetAllApprovedPostsForUser(string userId)
+        {
+            return _repository.GetAllApprovedPostsForUser(userId);
+        }
+
+        public int CountUsersComments(string userId)
+        {
+            return _repository.CountUsersComments(userId);
+        }
+
+        public List<string> ModeratorCategories(string userId)
+        {
+            return _repository.ModeratorCategories(userId);
+
+        }
     }
 }

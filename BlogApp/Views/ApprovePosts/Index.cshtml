@@ -26,8 +26,16 @@
 
                     <tr>
                         <td>@post.Headline</td>
-                        <td>@post.UserName</td>
-                        <td>@post.Category.CategoryName</td>
+                        <td>
+                            <a asp-controller="User" asp-action="Details" asp-route-userId="@post.UserId.Id">
+                                @post.UserName
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-controller="Home" asp-action="CategoryPosts" asp-route-categoryId="@post.Category.ID">
+                                @post.Category.CategoryName
+                            </a>
+                        </td>
                         <td>@post.PostedAt</td>
                         <td>
                             <a class="btn btn-success btn-xs" asp-action="Update" asp-route-id="@post.ID">

@@ -1,0 +1,58 @@
+﻿
+@using Microsoft.AspNetCore.Identity;
+@using BlogApp.Models;
+@model BlogApp.ViewModels.UserDetailsViewModel
+
+<div class="container">
+    <h2> User profile</h2>
+    <div class="row">
+        <div class=" col-md-offset-1 col-md-10">  
+            <dl class="dl-horizontal">
+                <dt>
+                    Name
+                </dt>
+                <dd>
+                   @Model.user.UserName
+                </dd>
+                <dt>
+                    Email
+                </dt>
+                <dd>
+                    @Model.user.Email
+                </dd>
+                <dt>
+                    Posts
+                </dt>
+                <dd>
+                    @Model.postCount
+                </dd>
+                <dt>
+                    Comments
+                </dt>
+                <dd>
+                    @Model.commentsCount
+                </dd>
+                <dt>
+                    User roles
+                </dt>
+                <dd>
+                    @Model.userRolesString
+                </dd>
+                <dt>
+                    Moderator for:
+                </dt>
+                <dd>
+                    @Model.moderatorCategories
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-offset-2 col-md-8">
+            <a class="btn btn-primary btn-block" 
+               asp-controller="User" 
+               asp-action="ApprovedPosts"                
+               asp-route-userId="@Model.user.Id">
+                View user posts
+            </a>
+        </div>
+    </div>
+</div>

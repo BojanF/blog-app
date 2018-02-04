@@ -63,7 +63,9 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Categories <span class="caret"></span></a>
                             <ul class="dropdown-menu nav-dropdown">
                                 <li>
-                                    <a asp-area="" asp-controller="Categories" asp-action="Index">All categories</a>
+                                    <a asp-area="" asp-controller="Categories" asp-action="Index">
+                                        <i class="fa fa-list-alt"></i> All categories
+                                    </a>
                                 </li>
                                 <li>
                                     <a asp-area="" asp-controller="Categories" asp-action="Create"> <i class="fa fa-plus"></i> Add new</a>
@@ -71,19 +73,32 @@
                             </ul>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a asp-area="" asp-controller="Home" asp-action="About">
+                                <i class="fa fa-fw fa-info-circle"></i> About
+                            </a>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="fa fa-user"> <span class="caret"></span></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="fa fa-bars"> <span class="caret"></span></span></a>
                             <ul class="dropdown-menu nav-dropdown">
                                 <li>
-                                    <a asp-area="" asp-controller="UserManagement" asp-action="Index">User Management</a>
+                                    <a asp-area="" asp-controller="User" asp-action="Profile" class="text-center">
+                                        <i class="fa fa-fw fa-user"></i> Profile
+                                    </a>
                                 </li>
                                 <li>
-                                    <a asp-area="" asp-controller="ApprovePosts" asp-action="Index">Aprove Posts</a>
+                                    <a asp-area="" asp-controller="UserManagement" asp-action="Index" class="text-center">
+                                        <i class="fa fa-fw fa-cog"></i> User Management
+                                    </a>
                                 </li>
                                 <li>
-                                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Sign out</button>
+                                    <a asp-area="" asp-controller="ApprovePosts" asp-action="Index" class="text-center">
+                                        <i class="fa fa-fw fa-check"></i> Approve Posts
+                                    </a>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link btn-block">
+                                        <i class="fa fa-fw fa-sign-out"></i> Sign out
+                                    </button>
                                 </li>
                             </ul>
                         </li>
@@ -97,16 +112,27 @@
                             <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a asp-area="" asp-controller="Home" asp-action="About">
+                                <i class="fa fa-fw fa-info-circle"></i> About
+                            </a>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="fa fa-user"> <span class="caret"></span></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="fa fa-bars"> <span class="caret"></span></span></a>
                             <ul class="dropdown-menu nav-dropdown">
                                 <li>
-                                    <a asp-area="" asp-controller="ApprovePosts" asp-action="Index">Aprove Posts</a>
+                                    <a asp-area="" asp-controller="User" asp-action="Profile" class="text-center">
+                                        <i class="fa fa-fw fa-user"></i> Profile
+                                    </a>
                                 </li>
                                 <li>
-                                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Sign out</button>
+                                    <a asp-area="" asp-controller="ApprovePosts" asp-action="Index"  class="text-center">
+                                        <i class="fa fa-fw fa-check"></i> Aprove Posts
+                                    </a>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link btn-block">
+                                        <i class="fa fa-fw fa-sign-out"></i> Sign out
+                                    </button>
                                 </li>
                             </ul>
                         </li>
@@ -120,23 +146,30 @@
                             <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a asp-area="" asp-controller="Home" asp-action="About">
+                                <i class="fa fa-fw  fa-info-circle"></i> About
+                            </a>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="fa fa-user"> <span class="caret"></span></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="fa fa-bars"> <span class="caret"></span></span></a>
                             <ul class="dropdown-menu nav-dropdown">
                                 <li>
-                                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Sign out</button>
+                                    <a asp-area="" asp-controller="User" asp-action="Profile" class="text-center">
+                                        <i class="fa fa-fw fa-user"></i> Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link btn-block">
+                                        <i class="fa fa-fw fa-sign-out"></i> Sign out
+                                    </button>
                                 </li>
                             </ul>
                         </li>
                        }
-
-
                     }
                     else
                     {
-                    <!-- If is not Authenticated-->
+                        <!-- If is not Authenticated-->
                     }
                     </ul>
                 </div>
@@ -154,8 +187,7 @@
                     <div class="site-heading">
                         <h1>@ViewData["Header"]</h1>
                         <hr class="small">
-                        <!--<span class="subheading">Your oppinion posted online</span>-->
-                        <span class="meta">@ViewData["Message"] <a href="#"> @ViewData["Autor"] </a>@ViewData["Posted"]</span>
+                        <span class="meta">@ViewData["Message"] <a asp-controller="User" asp-action="Details" asp-route-userId="@ViewData["UserId"]"> @ViewData["Autor"] </a>@ViewData["Posted"]</span>
                     </div>
                 </div>
             </div>
