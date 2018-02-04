@@ -3,31 +3,98 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["Header"] = "Post Categories";
     var categorySize = Model.Count();
+
 }
 
 <div class="container-fluid">
 
-    <h2>Post categories</h2>
     @if (categorySize != 0)
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Category name
-                    </th>
-                    <th>
-                        Moderator posts rule                    
-                    </th>                
-                    <th>
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        @if (User.IsInRole("Admin"))
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Category name
+                        </th>
+                        <th>
+                            Post rule                    
+                        </th>                
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostRule)
+                            </td>
+                            <td>
+                                <a class="btn btn-success btn-xs" asp-action="Edit" asp-route-id="@item.ID">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                                </a>
+                                <a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@item.ID">
+                                    <i class="fa fa-info" aria-hidden="true"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.ID">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    @{
+                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    }
+                
+                </tbody>
+            </table>
+
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="previous">
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        &larr;
+                        Previous
+                    </a>        
+                </li>
+                <li class="next">
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Next
+                        &rarr;
+                    </a>    
+                </li>
+             </ul>
+         }
+         else
+         {
+            <table class="table" tabindex="0">
+                <thead>
+                    <tr>
+                        <th>
+                         Category name
+                        </th>
+                        <th>
+                            Post rule
+                        </th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                 @foreach (var item in Model)
+                  {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.CategoryName)
@@ -35,47 +102,36 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.PostRule)
                         </td>
-                        <td>
-                            <a class="btn btn-success btn-xs" asp-action="Edit" asp-route-id="@item.ID">
-                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                            </a>
-                            <a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@item.ID">
-                                <i class="fa fa-info" aria-hidden="true"></i> Details
-                            </a>
-                            <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.ID">
-                                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
-                            </a>
-                        </td>
                     </tr>
-                }
-                @{
-                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-                }
-                
-            </tbody>
-        </table>
+                   }
+                                    @{
+                                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                                    }
 
-        <!-- Pager -->
-        <ul class="pager">
-            <li class="previous">
-                <a asp-action="Index"
-                   asp-route-page="@(Model.PageIndex - 1)"
-                   class="btn btn-default @prevDisabled">
-                    &larr;
-                    Previous
-                </a>        
-            </li>
-            <li class="next">
-                <a asp-action="Index"
-                   asp-route-page="@(Model.PageIndex + 1)"
-                   class="btn btn-default @nextDisabled">
-                    Next
-                    &rarr;
-                </a>    
-            </li>
-         </ul>        
-            
+                                </tbody>
+                            </table>
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="previous">
+                    <a asp-action="Index"
+                        asp-route-page="@(Model.PageIndex - 1)"
+                        class="btn btn-default @prevDisabled">
+                        &larr;
+                        Previous
+                    </a>
+                </li>
+                <li class="next">
+                    <a asp-action="Index"
+                        asp-route-page="@(Model.PageIndex + 1)"
+                        class="btn btn-default @nextDisabled">
+                        Next
+                        &rarr;
+                    </a>
+                </li>
+            </ul>
+         }
+
      }
      else
      {

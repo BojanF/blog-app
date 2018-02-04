@@ -63,36 +63,26 @@ namespace BlogApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult AccessGraanted() {
-            return View();
-            
-        }
-
-        [HttpGet]
         public IActionResult About()
         {
             ViewData["Header"] = "About us";
 
             List<Category> categoryList = _categoryService.GetAllCategories().Result;
             List<CategoryExtendedViewModel> statisticList = new List<CategoryExtendedViewModel>();
-            for (int i=0;i<categoryList.Count;i++) {
+            for (int i = 0; i < categoryList.Count; i++)
+            {
                 int countedPosts = _categoryService.CountPostsForCategory(categoryList[i].ID);
                 CategoryExtendedViewModel catItem = new CategoryExtendedViewModel(categoryList[i].CategoryName, countedPosts);
                 statisticList.Add(catItem);
             }
-            string json = JsonConvert.SerializeObject(statisticList);
-            
-            ViewData["statisticList"] = json;
-            
-            return View();
-        }
 
-        [HttpGet]
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-            
-            return View();
+            string json = JsonConvert.SerializeObject(statisticList);
+
+
+            ViewData["statisticList"] = json;
+            ViewData["statisticList1"] = statisticList;
+            //return Json(statisticList);
+            return View(statisticList);
         }
 
         [HttpGet]

@@ -24,7 +24,6 @@
     <!-- Load d3.js and c3.js -->
     <script src="~/lib/d3/d3.min.js" charset="utf-8"></script>
     <script src="~/lib/c3/c3.min.js"></script>
-    
 
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -111,6 +110,12 @@
                         <li>
                             <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts </a>
                         </li>
+                      
+                         <li>
+                            <a asp-area="" asp-controller="Categories" asp-action="Index">
+                            <i class="fa fa-list-alt"></i> Categories Rule
+                            </a>
+                         </li>                      
                         <li>
                             <a asp-area="" asp-controller="Home" asp-action="About">
                                 <i class="fa fa-fw fa-info-circle"></i> About
@@ -144,6 +149,11 @@
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Posts" asp-action="Index"><i class="fa fa-list-alt"></i> Your Posts</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Categories" asp-action="Index">
+                                <i class="fa fa-list-alt"></i> Categories Rule
+                            </a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Home" asp-action="About">

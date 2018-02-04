@@ -116,5 +116,12 @@ namespace BlogApp.Controllers
             }
                 return View(viewModelRegister);
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+
+        }
     }
 }

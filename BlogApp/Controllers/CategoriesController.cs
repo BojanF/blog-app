@@ -18,7 +18,7 @@ using System.Data.SqlClient;
 
 namespace BlogApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class CategoriesController : Controller
     {
         
@@ -38,12 +38,10 @@ namespace BlogApp.Controllers
             _userService = userService;
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "Admin,Moderator,User")]
         // GET: Categories
         public async Task<IActionResult> Index(int? page)
         {
-            //ViewData["Header"] = "BlogApp";
-            //return View(await _categoryService.GetAllCategories());
 
             ViewData["Header"] = "BlogApp";
             int pageSize = 5;
@@ -52,6 +50,7 @@ namespace BlogApp.Controllers
             return View(await PaginatedList<Category>.CreateAsync(categories, page ?? 1, pageSize));
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(long? id)
         {
@@ -71,6 +70,7 @@ namespace BlogApp.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Categories/Create
         public IActionResult Create()
         {
@@ -81,6 +81,7 @@ namespace BlogApp.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,CategoryName,PostRule")] Category category)
@@ -93,7 +94,7 @@ namespace BlogApp.Controllers
             }
             return View(category);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
@@ -114,6 +115,7 @@ namespace BlogApp.Controllers
         // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("ID,CategoryName,PostRule")] Category category)
@@ -214,7 +216,7 @@ namespace BlogApp.Controllers
             }
             return View(category);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
@@ -248,6 +250,7 @@ namespace BlogApp.Controllers
         }
 
         // POST: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)

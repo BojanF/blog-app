@@ -1,7 +1,66 @@
-﻿@{
+﻿@model System.Collections.Generic.List<BlogApp.ViewModels.CategoryExtendedViewModel>
+@{
     ViewData["Title"] = "About";
-}
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <h3>Introduction</h3>
+                <p>
+                    The name of the application speak itself about the purpose of using and if you participate
+                    in the digital information age through blogging, then you are in the right place.
+                    This application is a typical Blog/News application where all off the users are allowed
+                    to spread their experiences, information, hobbies and etc. in field of interest by creating
+                    a post for certain category. As well as users can leave their comments to the approved posts.
+                    We also must mention that newly created post can’t be displayed until
+                    the moderator or admin approve it.
+                </p>
+
+                <h3>How to become a Moderator?</h3>
+                <p>
+                    This privilege is acquired only by an ordinary user for each category separately.
+                    Each category had its own criterion of what is needed for one user to fulfill
+                    and become a Moderator on that particular category. That is number of minimum published posts.
+                </p>
+
+                <h3>Rules of Approving Posts</h3>
+                <p>
+                    The Admins can approve posts of all categories that they are participate.
+                    <br />
+                    Moderators can approve posts of the categories that they are participate.
+                </p>
+                <br />
+                <div>
+                    <h3>Current Statistics</h3>
+                    <br />
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Category</div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Number of Posts</div>
+                        </div>
+                        <div class="panel-body">
+                            @foreach (var cat in Model)
+                            {
+                                <p class="col-lg-6 col-md-6 col-sm-6 col-xs-6">@cat.categoryName</p>
+                                <p class="col-lg-6 col-md-6 col-sm-6 col-xs-6">@cat.countedPosts</p>
+                                <hr style="width:100%; border:2px thick #032952" />
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<style>
+    .panel-heading {
+        display:flex;
+    }
+</style>
